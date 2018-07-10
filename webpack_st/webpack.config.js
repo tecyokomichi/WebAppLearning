@@ -1,7 +1,24 @@
+const webpack = require('webpack');
 module.exports = {
-    entry : './main.js',
+    entry : './react-app.js',
     output : {
-        filename : 'main.bundle.js'
-    }
+        filename : 'react-app.bundle_plugin.js'
+    },
+    module : {
+        rules : [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                  presets: ['react', 'es2015']
+                }
+            }
+        ]
+    },
+    plugins : [
+      new webpack.ProvidePlugin({
+        $: 'jquery'
+      })
+    ]
 };
-
