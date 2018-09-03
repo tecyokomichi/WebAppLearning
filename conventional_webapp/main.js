@@ -28,6 +28,14 @@ function doRequest(req, res) {
       res.write(authorindexejs);
       res.end();
     });
+  }else if(uri == "/authornew"){
+    var authornew = fs.readFileSync('./views/authornew.ejs', 'utf8');
+    var authornewejs = ejs.render(authornew, {
+      title:"作者新規"
+    });
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(authornewejs);
+    res.end();
   }else if(uri == "/bookindex"){
     var bookindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
     connection.query('SELECT * from books;', (err, rows, fields) => {
