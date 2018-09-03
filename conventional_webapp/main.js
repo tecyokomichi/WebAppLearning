@@ -115,6 +115,25 @@ function doRequest(req, res) {
         });
       });
     }
+  }else if(uri == "/bookdelete"){
+    if(req.method == "POST"){
+      var bookdeletebody = '';
+      req.on('data', function(chunk) {
+        bookdeletebody += chunk;
+      });
+      req.on('end', function() {
+        var bookdelete = fs.readFileSync('./views/bookdelete.ejs', 'utf8');
+        connection.query('DELETE FROM books WHERE ' + bookdeletebody + ';', (err, rows, fields) => {
+          if (err) throw err;
+          var bookdeleteejs = ejs.render(bookdelete, {
+            message:"書籍データ削除"
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(bookdeleteejs);
+          res.end();
+        });
+      });
+    }
   }else if(uri == "/style.css"){
     var style = fs.readFileSync('./style.css', 'utf8');
     res.writeHead(200, {'Content-Type': 'text/css'});
