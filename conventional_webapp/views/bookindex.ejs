@@ -19,7 +19,7 @@
         <td class="intvalue" width="5%"><%= book.id %></td>
         <td width="95%"><%= book.title %></td>
         <td>
-          <form action="" method="post">
+          <form action="./bookedit" method="post">
             <input type="submit" value="編集">
             <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
           </form>

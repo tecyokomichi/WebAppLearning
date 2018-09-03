@@ -76,6 +76,26 @@ function doRequest(req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write(booknewejs);
     res.end();
+  }else if(uri == "/bookedit"){
+    if(req.method == "POST"){
+      var bookeditbody = '';
+      req.on('data', function(chunk) {
+        bookeditbody += chunk;
+      });
+      req.on('end', function() {
+        var bookedit = fs.readFileSync('./views/bookedit.ejs', 'utf8');
+        connection.query('SELECT * FROM books WHERE ' + bookeditbody + ';', (err, rows, fields) => {
+          if (err) throw err;
+          var bookeditjs = ejs.render(bookedit, {
+            title:"書籍編集",
+            books:rows
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(bookeditjs);
+          res.end();
+        });
+      });
+    }
   }else if(uri == "/style.css"){
     var style = fs.readFileSync('./style.css', 'utf8');
     res.writeHead(200, {'Content-Type': 'text/css'});
