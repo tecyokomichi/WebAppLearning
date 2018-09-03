@@ -56,6 +56,25 @@ function doRequest(req, res) {
         });
       });
     }
+  }else if(uri == "/authordelete"){
+    if(req.method == "POST"){
+      var authordeletebody = '';
+      req.on('data', function(chunk) {
+        authordeletebody += chunk;
+      });
+      req.on('end', function() {
+        var authordelete = fs.readFileSync('./views/authordelete.ejs', 'utf8');
+        connection.query('DELETE FROM authors WHERE ' + authordeletebody + ';', (err, rows, fields) => {
+          if (err) throw err;
+          var authordeleteejs = ejs.render(authordelete, {
+            message:"作者データ削除"
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(authordeleteejs);
+          res.end();
+        });
+      });
+    }
   }else if(uri == "/bookindex"){
     var bookindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
     connection.query('SELECT * from books;', (err, rows, fields) => {
