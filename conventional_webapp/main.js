@@ -48,6 +48,14 @@ function doRequest(req, res) {
       res.write(bookindexejs);
       res.end();
     });
+  }else if(uri == "/booknew"){
+    var booknew = fs.readFileSync('./views/booknew.ejs', 'utf8');
+    var booknewejs = ejs.render(booknew, {
+      title:"書籍新規"
+    });
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(booknewejs);
+    res.end();
   }else if(uri == "/style.css"){
     var style = fs.readFileSync('./style.css', 'utf8');
     res.writeHead(200, {'Content-Type': 'text/css'});
