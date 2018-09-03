@@ -106,4 +106,13 @@ $ npm install db-migrate --save
 $ npm install db-migrate-mysql --save
 ```
 ここでも `--save` オプションをつけてローカルにインストールします  
+  
+### ejs
+テンプレートエンジン `EJS` をインストールします  
+#### インストール
+```
+$ npm install ejs --save
+```
+`--save` オプションをつけてローカルにインストールします  
+package.json に追記されます  
 
