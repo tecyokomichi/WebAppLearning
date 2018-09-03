@@ -36,6 +36,26 @@ function doRequest(req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write(authornewejs);
     res.end();
+  }else if(uri == "/authoredit"){
+    if(req.method == "POST"){
+      var authoreditbody = '';
+      req.on('data', function(chunk) {
+        authoreditbody += chunk;
+      });
+      req.on('end', function() {
+        var authoredit = fs.readFileSync('./views/authoredit.ejs', 'utf8');
+        connection.query('SELECT * FROM authors WHERE ' + authoreditbody + ';', (err, rows, fields) => {
+          if (err) throw err;
+          var authoreditejs = ejs.render(authoredit, {
+            title:"作者編集",
+            authors:rows
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(authoreditejs);
+          res.end();
+        });
+      });
+    }
   }else if(uri == "/bookindex"){
     var bookindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
     connection.query('SELECT * from books;', (err, rows, fields) => {
