@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <% mysqlconnection %>
+  <link href="../style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header>
+    <h1 id="h1"><%= title %></h1>
+  </header>
+  <table id="authorstable" border='1'>
+    <tr id="header">
+      <tr><td>id</td><td>区分</td><td>タイトル</td><td> </td><td> </td></tr>
+    </tr>
+    <% books.forEach(function(book) { %>
+      <tr>
+        <form method="post">
+          <td><input type="text" name="id" size="5" value="<%= book.id %>" disabled="readonly"/></td>
+          <td>
+            <select id="book_kind_input" name="book_kind" selectedIndex="3">
+              <option value="0">不明</option>
+              <option value="1">ハードカバー</option>
+              <option value="2">文庫</option>
+              <option value="3">その他</option>
+            </select>
+            <input id="book_kind" type="hidden" name="book_kind" value="<%= book.book_kind %>">
+          </td>
+          <td><input type="text" name="title" size="100%" value="<%= book.title %>"/></td>
+          <td><input type="submit" value="保存"></td>
+          <td><input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル"></td>
+        </form>
+      </tr>
+    <% }); %>
+  </table>
+
+  <script type="text/javascript">
+    window.onload = function(){
+      var bookKindInput = document.getElementById('book_kind_input');
+      var bookKind = document.getElementById('book_kind');
+      bookKindInput.selectedIndex = bookKind.value;
+      alert(bookKind.value);
+    }
+  </script>
+
+</body>
+
+</html>
+

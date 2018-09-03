@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <% mysqlconnection %>
+  <link href="../style.css" rel="stylesheet" type="text/css">
+  <!-- <style>
+    body { font-size:12pt; color:#006666; }
+    h1 { font-size:18pt; background-color:#AAFFFF; }
+    pre { background-color:#EEEEEE; }
+  </style> -->
+</head>
+
+<body>
+  <header>
+    <h1 id="h1"><%= title %></h1>
+  </header>
+  <table id="authorstable" border='1'>
+    <tr id="header">
+      <tr><td>id</td><td>名称</td><td>年齢</td><td> </td><td> </td><td> </td></tr>
+    </tr>
+    <% authors.forEach(function(author) { %>
+      <tr>
+        <td class="intvalue" width="5%"><%= author.id %></td>
+        <td width="85%"><%= author.name %></td>
+        <td class="intvalue" width="10%"><%= author.age %></td>
+        <td>
+          <form action="./authoredit" method="post">
+            <input type="submit" value="編集">
+            <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+          </form>
+        </td>
+        <td>
+          <input type="submit" value="削除">
+        </td>
+        <td>
+          <input type="submit" value="作品一覧">
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+  <div>
+    <input type="button" onclick="location.href='http://localhost:3939'" value="トップへ">
+  </div>
+</body>
+
+</html>
+
