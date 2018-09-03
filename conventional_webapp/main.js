@@ -134,6 +134,11 @@ function doRequest(req, res) {
         });
       });
     }
+  }else if(uri == "/badrequest"){
+    var badrequest = fs.readFileSync('./views/badrequest.html', 'utf8');
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(badrequest);
+    res.end();
   }else if(uri == "/style.css"){
     var style = fs.readFileSync('./style.css', 'utf8');
     res.writeHead(200, {'Content-Type': 'text/css'});
