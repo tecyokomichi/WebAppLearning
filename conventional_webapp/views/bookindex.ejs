@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <link href="../style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header>
+    <h1 id="h1"><%= title %></h1>
+  </header>
+  <table id="bookstable" border='1'>
+    <tr id="header">
+      <tr><td>id</td><td>タイトル</td><td> </td><td> </td></tr>
+    </tr>
+    <% books.forEach(function(book) { %>
+      <tr id=<%= book.title %>>
+        <td class="intvalue" width="5%"><%= book.id %></td>
+        <td width="95%"><%= book.title %></td>
+        <td>
+          <form action="" method="post">
+            <input type="submit" value="編集">
+            <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+          </form>
+        </td>
+        <td>
+          <form action="" method="post">
+            <input type="submit" value="削除">
+            <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+          </form>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+  <div>
+    <input type="button" onclick="location.href='http://localhost:3939'" value="トップへ">
+  </div>
+</body>
+
+</html>
