@@ -15,11 +15,11 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return null;
+  return db.addColumn('authors','gender_kind',{ type: 'int', after: 'age' });
 };
 
 exports.down = function(db) {
-  return null;
+  return db.removeColumn('authors','gender_kind');
 };
 
 exports._meta = {
