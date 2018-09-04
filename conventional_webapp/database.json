@@ -1,0 +1,9 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "pikaichi",
+    "database": "bookshelf_st_development"
+  }
+}
+
