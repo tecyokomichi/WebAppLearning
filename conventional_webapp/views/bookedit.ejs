@@ -12,7 +12,7 @@
   </header>
   <table id="bookstable" border='1'>
     <tr id="header">
-      <tr><td>id</td><td>区分</td><td>タイトル</td><td> </td><td> </td></tr>
+      <tr><td>id</td><td>区分</td><td>作者</td><td>タイトル</td><td> </td><td> </td></tr>
     </tr>
     <% books.forEach(function(book) { %>
       <tr>
@@ -27,6 +27,16 @@
             </select>
             <input id="book_kind" type="hidden" name="book_kind" value="<%= book.book_kind %>">
           </td>
+          <td>
+            <select id="author_id_input" name="author_id_input" value="<%= book.author_id %>">
+            <% var index; %>
+            <% for(var i=0; i<authors.length; i++){ %>
+            <%   if(authors[i].id == book.author_id) index = i; %>
+            <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
+            <% } %>
+            </select>
+            <input id="author_id_index" type="hidden" value="<%= index %>">
+          </td>
           <td><input type="text" name="title" size="100%" value="<%= book.title %>"/></td>
           <td><input type="submit" value="保存"></td>
           <td><input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル"></td>
@@ -40,6 +50,9 @@
       var bookKindInput = document.getElementById('book_kind_input');
       var bookKind = document.getElementById('book_kind');
       bookKindInput.selectedIndex = bookKind.value;
+      var authorIdInput = document.getElementById('author_id_input');
+      var authorIdIndex = document.getElementById('author_id_index');
+      authorIdInput.selectedIndex = authorIdIndex.value;
     }
   </script>
 

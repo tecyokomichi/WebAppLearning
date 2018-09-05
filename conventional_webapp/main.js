@@ -100,21 +100,25 @@ function doRequest(req, res) {
     });
   }else if(uri == "/bookedit"){
     if(req.method == "POST"){
-      var bookeditbody = '';
-      req.on('data', function(chunk) {
-        bookeditbody += chunk;
-      });
-      req.on('end', function() {
-        var bookedit = fs.readFileSync('./views/bookedit.ejs', 'utf8');
-        connection.query('SELECT * FROM books WHERE ' + bookeditbody + ';', (err, rows, fields) => {
-          if (err) throw err;
-          var bookeditjs = ejs.render(bookedit, {
-            title:"書籍編集",
-            books:rows
+      connection.query('SELECT * FROM authors;', (err, rows, fields) => {
+        var authors = rows;
+        var bookeditbody = '';
+        req.on('data', function(chunk) {
+          bookeditbody += chunk;
+        });
+        req.on('end', function() {
+          var bookedit = fs.readFileSync('./views/bookedit.ejs', 'utf8');
+          connection.query('SELECT * FROM books WHERE ' + bookeditbody + ';', (err, rows, fields) => {
+            if (err) throw err;
+            var bookeditjs = ejs.render(bookedit, {
+              title:"書籍編集",
+              authors:authors,
+              books:rows
+            });
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(bookeditjs);
+            res.end();
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(bookeditjs);
-          res.end();
         });
       });
     }
