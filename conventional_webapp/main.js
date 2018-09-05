@@ -88,13 +88,16 @@ function doRequest(req, res) {
       res.end();
     });
   }else if(uri == "/booknew"){
-    var booknew = fs.readFileSync('./views/booknew.ejs', 'utf8');
-    var booknewejs = ejs.render(booknew, {
-      title:"書籍新規"
+    connection.query('SELECT * FROM authors;', (err, rows, fields) => {
+      var booknew = fs.readFileSync('./views/booknew.ejs', 'utf8');
+      var booknewejs = ejs.render(booknew, {
+        title:"書籍新規",
+        authors:rows
+      });
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write(booknewejs);
+      res.end();
     });
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(booknewejs);
-    res.end();
   }else if(uri == "/bookedit"){
     if(req.method == "POST"){
       var bookeditbody = '';

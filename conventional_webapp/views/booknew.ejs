@@ -12,7 +12,7 @@
   </header>
   <table id="authorstable" border='1'>
     <tr id="header">
-      <tr><td>区分</td><td>タイトル</td><td> </td><td> </td></tr>
+      <tr><td>区分</td><td>作者</td><td>タイトル</td><td> </td><td> </td></tr>
     </tr>
      <tr>
        <form ation="./authorshow" method="post">
@@ -24,6 +24,13 @@
               <option value="3">その他</option>
             </select>
             <input id="book_kind" type="hidden" name="book_kind" value="<%= book_kind %>">
+          </td>
+          <td>
+            <select id="author_id_input" name="author_id">
+            <% for(var i=0; i<authors.length; i++){ %>
+            <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
+            <% } %>
+            </select>
           </td>
           <td><input type="text" name="title" size="100%" value="<%= title %>"/></td>
           <td><input type="submit" value="登録"></td>
