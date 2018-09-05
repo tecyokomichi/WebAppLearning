@@ -32,7 +32,10 @@
           </form>
         </td>
         <td>
-          <input type="submit" value="作品一覧">
+          <form action="./bookindex" method="post">
+            <input type="submit" value="作品一覧">
+            <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+          </form>
         </td>
       </tr>
     <% }); %>

@@ -77,16 +77,36 @@ function doRequest(req, res) {
     }
   }else if(uri == "/bookindex"){
     var bookindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
-    connection.query('SELECT * from books;', (err, rows, fields) => {
-      if (err) throw err;
-      var bookindexejs = ejs.render(bookindex, {
-        title:"書籍一覧",
-        books:rows
+    var bookindexejs;
+    if(req.method == "POST"){
+      var bookindexbody = '';
+      req.on('data', function(chunk) {
+        bookindexbody += chunk;
       });
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write(bookindexejs);
-      res.end();
-    });
+      req.on('end', function() {
+        connection.query('SELECT * FROM books WHERE author_' + bookindexbody + ';', (err, rows, fields) => {
+          if (err) throw err;
+          bookindexjs = ejs.render(bookindex, {
+            title:"書籍一覧",
+            books:rows
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(bookindexjs);
+          res.end();
+        });
+      });
+    }else{
+      connection.query('SELECT * from books;', (err, rows, fields) => {
+        if (err) throw err;
+        bookindexejs = ejs.render(bookindex, {
+          title:"書籍一覧",
+          books:rows
+        });
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(bookindexejs);
+        res.end();
+      });
+    }
   }else if(uri == "/booknew"){
     connection.query('SELECT * FROM authors;', (err, rows, fields) => {
       var booknew = fs.readFileSync('./views/booknew.ejs', 'utf8');
