@@ -10,6 +10,8 @@
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
+  <input id="filterInput" placeholder="キーワード入力"/>
+  <button type="button" id="do_filter" onClick="filterOnInput()">絞込</button>
   <table id="authorstable" border='1'>
     <tr id="header">
       <td>id</td><td>名称</td><td>年齢</td><td> </td><td> </td><td> </td>
@@ -47,3 +49,24 @@
 
 </html>
 
+<script type="text/javascript">
+
+  function filterOnInput(){
+    var str = filterInput.value;
+    var rows = document.getElementById('authorstable').rows;
+    for(var i=1; i<rows.length; i++){
+      var row = rows[i];
+      if(!str || !str.length){
+        row.style.display = 'block';
+      }else{
+        var innerText = row.innerText;
+        if(innerText && innerText.indexOf(str) > -1){
+          row.style.display = 'block';
+        }else{
+          row.style.display = 'none';
+        }
+      }
+    }
+  }
+
+</script>
