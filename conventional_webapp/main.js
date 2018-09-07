@@ -68,6 +68,19 @@ function doRequest(req, res) {
         var authorId = 0;
         prms = authorshowbody.split('&');
         var o = returnAuthorParam(prms);
+        var errors = prmCheckAuthor(o);
+        if(errors && errors.length){
+          var badrequest = fs.readFileSync('./views/badrequest.ejs', 'utf8');
+          var badrequestejs = ejs.render(badrequest, {
+            title:'400 BadRequest',
+            message:'エラー 入力に不備があります',
+            detail:errors[0]
+          });
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(badrequestejs);
+          res.end();
+          return;
+        }
         if(o.id){
           authorId = o.id;
           sql = "UPDATE authors SET name=" + "'" + o.name + "', age=" + o.age + ", updated_at=" + "'" + now + "'" + " WHERE id=" + o.id + ";"
@@ -296,4 +309,17 @@ function returnBookParam(a) {
   }else{
     return { bookKind:r[0], authorId:r[1], title:r[2] };
   }
+}
+
+function prmCheckAuthor(o) {
+  var r = [];
+  var name = o.name;
+  if(name.length){
+    if(name.length > 10){
+     r.push('名称が長過ぎます');
+    }
+  }else{
+    r.push('名称が入力されていません');
+  }
+  return r;
 }
