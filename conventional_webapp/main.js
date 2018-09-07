@@ -56,6 +56,42 @@ function doRequest(req, res) {
         });
       });
     }
+  }else if(uri == "/authorshow"){
+    if(req.method == "POST"){
+      var authorshowbody = '';
+      req.on('data', function(chunk) {
+        authorshowbody += chunk;
+      });
+      req.on('end', function() {
+        now = returnDatetimeStr();
+        var sql = "";
+        var authorId = 0;
+        prms = authorshowbody.split('&');
+        var o = returnAuthorParam(prms);
+        if(o.id){
+          authorId = o.id;
+          sql = "UPDATE authors SET name=" + "'" + o.name + "', age=" + o.age + ", updated_at=" + "'" + now + "'" + " WHERE id=" + o.id + ";"
+        }else{
+          sql = "INSERT INTO authors (name, age, created_at, updated_at) VALUES (" + "'" + o.name + "', " + o.age + ", '" + now + "', '" + now + "'" +  ");";
+        }
+        connection.query(sql, function(err, result){
+          if (err) throw err;
+          var authorshowindex = fs.readFileSync('./views/authorindex.ejs', 'utf8');
+          if(result.insertId) authorId = result.insertId;
+          var afterSql = "SELECT * FROM authors WHERE id=" + authorId + ";";
+          connection.query(afterSql, (err, rows, fields) => {
+            if (err) throw err;
+            var authorshowindexejs = ejs.render(authorshowindex, {
+              title:"作者詳細",
+              authors:rows
+            });
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(authorshowindexejs);
+            res.end();
+          });
+        });
+      });
+    }
   }else if(uri == "/authordelete"){
     if(req.method == "POST"){
       var authordeletebody = '';
@@ -176,5 +212,35 @@ function doRequest(req, res) {
     res.writeHead(200, {'Content-Type': 'text/css'});
     res.write(style);
     res.end();
+  }
+}
+
+function returnDatetimeStr() {
+  var datetime = new Date();
+  var year = datetime.getFullYear().toString();
+  var month = (datetime.getMonth()+1).toString();
+  var date = datetime.getDate().toString();
+  var hour = datetime.getHours().toString();
+  var minute = datetime.getMinutes().toString();
+  var second = datetime.getSeconds().toString();
+  year = ('0000' + year).slice(-4);
+  month = ('00' + month).slice(-2);
+  date = ('00' + date).slice(-2);
+  hour = ('00' + hour).slice(-2);
+  minute = ('00' + minute).slice(-2);
+  second = ('00' + second).slice(-2);
+  return year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
+}
+
+function returnAuthorParam(a) {
+  var r = [];
+  for(var i=0; i<a.length; i++){
+    var prms = a[i].split('=');
+    r.push(decodeURIComponent(prms[1]));
+  }
+  if(r.length == 3){
+    return { id:r[0], name:r[1], age:r[2] };
+  }else{
+    return { name:r[0], age:r[1] };
   }
 }
