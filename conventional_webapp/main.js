@@ -178,6 +178,45 @@ function doRequest(req, res) {
         });
       });
     }
+  }else if(uri == "/bookshow"){
+    if(req.method == "POST"){
+      var bookshowbody = '';
+      req.on('data', function(chunk) {
+        bookshowbody += chunk;
+      });
+      req.on('end', function() {
+        now = returnDatetimeStr();
+        var sql = "";
+        var bookId = 0;
+        console.log(bookshowbody);
+        prms = bookshowbody.split('&');
+        console.log(prms);
+        var o = returnBookParam(prms);
+        if(o.id){
+          bookId = o.id;
+          sql = "UPDATE books SET book_kind=" + o.bookKind + ", author_id=" + o.authorId + ", title=" + "'" + o.title + "', updated_at=" + "'" + now + "'" + " WHERE id=" + o.id + ";"
+        }else{
+          sql = "INSERT INTO books (book_kind, author_id, title, created_at, updated_at) VALUES (" + o.bookKind + ", " + o.authorId + ", '" + o.title + "', '" + now + "', '" + now + "'" +  ");";
+        }
+        console.log(sql);
+        connection.query(sql, function(err, result){
+          if (err) throw err;
+          var bookshowindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
+          if(result.insertId) bookId = result.insertId;
+          var afterSql = "SELECT * FROM books WHERE id=" + bookId + ";";
+          connection.query(afterSql, (err, rows, fields) => {
+            if (err) throw err;
+            var bookshowindexejs = ejs.render(bookshowindex, {
+              title:"詳細書籍",
+              books:rows
+            });
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(bookshowindexejs);
+            res.end();
+          });
+        });
+      });
+    }
   }else if(uri == "/bookdelete"){
     if(req.method == "POST"){
       var bookdeletebody = '';
@@ -242,5 +281,19 @@ function returnAuthorParam(a) {
     return { id:r[0], name:r[1], age:r[2] };
   }else{
     return { name:r[0], age:r[1] };
+  }
+}
+
+function returnBookParam(a) {
+  var r = [];
+  for(var i=0; i<a.length; i++){
+    var prms = a[i].split('=');
+    r.push(decodeURIComponent(prms[1]));
+    console.log(r)
+  }
+  if(r.length == 4){
+    return { id:r[0], bookKind:r[1], authorId:r[2], title:r[3] };
+  }else{
+    return { bookKind:r[0], authorId:r[1], title:r[2] };
   }
 }
