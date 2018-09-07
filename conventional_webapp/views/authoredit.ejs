@@ -17,7 +17,10 @@
     <% authors.forEach(function(author) { %>
       <tr>
         <form action="./authorshow" method="post">
-          <td><input type="text" name="id" size="5" value="<%= author.id %>" disabled="readonly"/></td>
+          <td>
+            <input type="text" size="5" value="<%= author.id %>" disabled="readonly"/>
+             <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+          </td>
           <td><input type="text" name="name" size="100%" value="<%= author.name %>"/></td>
           <td><input type="text" name="age" value="<%= author.age %>"/></td>
           <td><input type="submit" value="保存"></td>
