@@ -17,7 +17,10 @@
     <% books.forEach(function(book) { %>
       <tr>
         <form action="./bookshow" method="post">
-          <td><input type="text" name="id" size="5" value="<%= book.id %>" disabled="readonly"/></td>
+          <td>
+            <input type="text" size="5" value="<%= book.id %>" disabled="readonly"/>
+            <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+          </td>
           <td>
             <select id="book_kind_input" name="book_kind">
               <option value="0">不明</option>
