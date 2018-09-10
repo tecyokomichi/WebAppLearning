@@ -271,6 +271,15 @@ function doRes(f, r, c, o) {
   r.end();
 }
 
+function doEdit(f, r, s, o, a=null) {
+  connection.query(s, (err, rows, fields) => {
+    if (err) throw err;
+    var ob = s.indexOf('authors') != -1 ? { title:"作者編集", authors:rows }:{ title:"書籍編集", books:rows, authors:a };
+    var editf = ejs.render(f, ob);
+    doRes(editf, r, 200, o);
+  });
+}
+
 function doDelete(f, r, s, o1, o2) {
   connection.query(s, (err, rows, fields) => {
     if (err) throw err;
