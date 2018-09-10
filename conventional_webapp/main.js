@@ -283,3 +283,11 @@ function doRes(f, r, c, o) {
   r.end();
 }
 
+function doDelte(f, r, s, o1, o2) {
+  connection.query(s, (err, rows, fields) => {
+    if (err) throw err;
+    var deletef = ejs.render(f, o2);
+    doRes(deletef, r, 200, o1);
+  });
+}
+
