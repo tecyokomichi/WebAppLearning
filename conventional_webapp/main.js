@@ -33,14 +33,7 @@ function doRequest(req, res) {
         authoreditbody += chunk;
       });
       req.on('end', function() {
-        connection.query('SELECT * FROM authors WHERE ' + authoreditbody + ';', (err, rows, fields) => {
-          if (err) throw err;
-          var authoredit = ejs.render(fs.readFileSync('./views/authoredit.ejs', 'utf8'), {
-            title:"作者編集",
-            authors:rows
-          });
-          doRes(authoredit, res, 200, {'Content-Type': 'text/html'});
-        });
+        doEdit(fs.readFileSync('./views/authoredit.ejs', 'utf8'), res, 'SELECT *  FROM authors WHERE ' + authoreditbody + ';', { 'Content-Type': 'text/html' });
       });
     }
   }else if(uri == "/authorshow"){
@@ -143,15 +136,7 @@ function doRequest(req, res) {
           bookeditbody += chunk;
         });
         req.on('end', function() {
-          connection.query('SELECT * FROM books WHERE ' + bookeditbody + ';', (err, rows, fields) => {
-            if (err) throw err;
-            var bookedit = ejs.render(fs.readFileSync('./views/bookedit.ejs', 'utf8'), {
-              title:"書籍編集",
-              authors:authors,
-              books:rows
-            });
-            doRes(bookedit, res, 200, {'Content-Type': 'text/html'});
-          });
+          doEdit(fs.readFileSync('./views/bookedit.ejs', 'utf8'), res, 'SELECT *  FROM books WHERE ' + bookeditbody + ';', { 'Content-Type': 'text/html' }, authors);
         });
       });
     }
