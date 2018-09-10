@@ -211,20 +211,12 @@ function doRequest(req, res) {
       });
     }
   }else if(uri == "/badrequest"){
-    var badrequest = fs.readFileSync('./views/badrequest.html', 'utf8');
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(badrequest);
-    res.end();
-  }else if(uri == "/notfind"){
-    var notfind = fs.readFileSync('./views/notfind.html', 'utf8');
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(notfind);
-    res.end();
+    doRes(fs.readFileSync('./views/badrequest.html', 'utf8'), res, 200, {'Content-Type': 'text/html'});
   }else if(uri == "/style.css"){
-    var style = fs.readFileSync('./style.css', 'utf8');
-    res.writeHead(200, {'Content-Type': 'text/css'});
-    res.write(style);
-    res.end();
+    doRes(fs.readFileSync('./style.css', 'utf8'), res, 200, {'Content-Type': 'text/css'});
+  }else{
+    var notfind = fs.readFileSync('./views/notfind.html', 'utf8');
+    doRes(notfind, res, 200, {'Content-Type': 'text/html'});
   }
 }
 
