@@ -323,3 +323,10 @@ function prmCheckAuthor(o) {
   }
   return r;
 }
+
+function doRes(f, r, c, o) {
+  r.writeHead(c, o);
+  r.write(f);
+  r.end();
+}
+
