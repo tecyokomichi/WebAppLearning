@@ -11,31 +11,21 @@ console.log('Server running!');
 function doRequest(req, res) {
   var uri = url.parse(req.url).pathname;
   if(uri == "/"){
-    var top = fs.readFileSync('./views/top.html', 'utf8');
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(top);
-    res.end();
+    doRes(fs.readFileSync('./views/top.html', 'utf8'), res, 200, {'Content-Type': 'text/html'});
   }else if(uri == "/authorindex"){
-    var authorindex = fs.readFileSync('./views/authorindex.ejs', 'utf8');
     connection.query('SELECT * from authors;', (err, rows, fields) => {
       if (err) throw err;
-      console.log('The solution is: ', rows);
-      var authorindexejs = ejs.render(authorindex, {
+      var authorindex = ejs.render(fs.readFileSync('./views/authorindex.ejs', 'utf8'), {
         title:"作者一覧",
         authors:rows
       });
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write(authorindexejs);
-      res.end();
+      doRes(authorindex, res, 200, {'Content-Type': 'text/html'});
     });
   }else if(uri == "/authornew"){
-    var authornew = fs.readFileSync('./views/authornew.ejs', 'utf8');
-    var authornewejs = ejs.render(authornew, {
+    var authornew = ejs.render(fs.readFileSync('./views/authornew.ejs', 'utf8'), {
       title:"作者新規"
     });
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(authornewejs);
-    res.end();
+    doRes(authornew, res, 200, {'Content-Type': 'text/html'});
   }else if(uri == "/authoredit"){
     if(req.method == "POST"){
       var authoreditbody = '';
@@ -43,16 +33,13 @@ function doRequest(req, res) {
         authoreditbody += chunk;
       });
       req.on('end', function() {
-        var authoredit = fs.readFileSync('./views/authoredit.ejs', 'utf8');
         connection.query('SELECT * FROM authors WHERE ' + authoreditbody + ';', (err, rows, fields) => {
           if (err) throw err;
-          var authoreditejs = ejs.render(authoredit, {
+          var authoredit = ejs.render(fs.readFileSync('./views/authoredit.ejs', 'utf8'), {
             title:"作者編集",
             authors:rows
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(authoreditejs);
-          res.end();
+          doRes(authoredit, res, 200, {'Content-Type': 'text/html'});
         });
       });
     }
@@ -70,15 +57,12 @@ function doRequest(req, res) {
         var o = returnAuthorParam(prms);
         var errors = prmCheckAuthor(o);
         if(errors && errors.length){
-          var badrequest = fs.readFileSync('./views/badrequest.ejs', 'utf8');
-          var badrequestejs = ejs.render(badrequest, {
+          var badrequeste = ejs.render(fs.readFileSync('./views/badrequest.ejs', 'utf8'), {
             title:'400 BadRequest',
             message:'エラー 入力に不備があります',
             detail:errors[0]
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(badrequestejs);
-          res.end();
+          doRes(badrequest, res, 200, {'Content-Type': 'text/html'});
           return;
         }
         if(o.id){
@@ -89,18 +73,15 @@ function doRequest(req, res) {
         }
         connection.query(sql, function(err, result){
           if (err) throw err;
-          var authorshowindex = fs.readFileSync('./views/authorindex.ejs', 'utf8');
           if(result.insertId) authorId = result.insertId;
           var afterSql = "SELECT * FROM authors WHERE id=" + authorId + ";";
           connection.query(afterSql, (err, rows, fields) => {
             if (err) throw err;
-            var authorshowindexejs = ejs.render(authorshowindex, {
+            var authorshowindex = ejs.render(fs.readFileSync('./views/authorindex.ejs', 'utf8'), {
               title:"作者詳細",
               authors:rows
             });
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(authorshowindexejs);
-            res.end();
+            doRes(authorshowindex, res, 200, {'Content-Type': 'text/html'});
           });
         });
       });
@@ -112,15 +93,12 @@ function doRequest(req, res) {
         authordeletebody += chunk;
       });
       req.on('end', function() {
-        var authordelete = fs.readFileSync('./views/authordelete.ejs', 'utf8');
         connection.query('DELETE FROM authors WHERE ' + authordeletebody + ';', (err, rows, fields) => {
           if (err) throw err;
-          var authordeleteejs = ejs.render(authordelete, {
+          var authordelete = ejs.render(fs.readFileSync('./views/authordelete.ejs', 'utf8'), {
             message:"作者データ削除"
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(authordeleteejs);
-          res.end();
+          doRes(authordelete, res, 200, {'Content-Type': 'text/html'});
         });
       });
     }
@@ -139,9 +117,7 @@ function doRequest(req, res) {
             title:"書籍一覧",
             books:rows
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(bookindexjs);
-          res.end();
+          doRes(bookindexejs, res, 200, {'Content-Type': 'text/html'})
         });
       });
     }else{
@@ -151,42 +127,36 @@ function doRequest(req, res) {
           title:"書籍一覧",
           books:rows
         });
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(bookindexejs);
-        res.end();
+        doRes(bookindexejs, res, 200, {'Content-Type': 'text/html'})
       });
     }
   }else if(uri == "/booknew"){
     connection.query('SELECT * FROM authors;', (err, rows, fields) => {
-      var booknew = fs.readFileSync('./views/booknew.ejs', 'utf8');
-      var booknewejs = ejs.render(booknew, {
+      if (err) throw err;
+      var booknew = ejs.render(fs.readFileSync('./views/booknew.ejs', {
         title:"書籍新規",
         authors:rows
       });
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write(booknewejs);
-      res.end();
+      doRes(booknew, res, 200, {'Content-Type': 'text/html'});
     });
   }else if(uri == "/bookedit"){
     if(req.method == "POST"){
       connection.query('SELECT * FROM authors;', (err, rows, fields) => {
+        if (err) throw err;
         var authors = rows;
         var bookeditbody = '';
         req.on('data', function(chunk) {
           bookeditbody += chunk;
         });
         req.on('end', function() {
-          var bookedit = fs.readFileSync('./views/bookedit.ejs', 'utf8');
           connection.query('SELECT * FROM books WHERE ' + bookeditbody + ';', (err, rows, fields) => {
             if (err) throw err;
-            var bookeditjs = ejs.render(bookedit, {
+            var bookedit = ejs.render(fs.readFileSync('./views/bookedit.ejs', 'utf8'), {
               title:"書籍編集",
               authors:authors,
               books:rows
             });
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(bookeditjs);
-            res.end();
+            doRes(bookedit, res, 200, {'Content-Type': 'text/html'});
           });
         });
       });
@@ -201,9 +171,7 @@ function doRequest(req, res) {
         now = returnDatetimeStr();
         var sql = "";
         var bookId = 0;
-        console.log(bookshowbody);
         prms = bookshowbody.split('&');
-        console.log(prms);
         var o = returnBookParam(prms);
         if(o.id){
           bookId = o.id;
@@ -211,21 +179,17 @@ function doRequest(req, res) {
         }else{
           sql = "INSERT INTO books (book_kind, author_id, title, created_at, updated_at) VALUES (" + o.bookKind + ", " + o.authorId + ", '" + o.title + "', '" + now + "', '" + now + "'" +  ");";
         }
-        console.log(sql);
         connection.query(sql, function(err, result){
           if (err) throw err;
-          var bookshowindex = fs.readFileSync('./views/bookindex.ejs', 'utf8');
           if(result.insertId) bookId = result.insertId;
           var afterSql = "SELECT * FROM books WHERE id=" + bookId + ";";
           connection.query(afterSql, (err, rows, fields) => {
             if (err) throw err;
-            var bookshowindexejs = ejs.render(bookshowindex, {
+            var bookshowindex = ejs.render(fs.readFileSync('./views/bookindex.ejs', 'utf8'), {
               title:"詳細書籍",
               books:rows
             });
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(bookshowindexejs);
-            res.end();
+            doRes(bookshowindex, res, 200, {'Content-Type': 'text/html'});
           });
         });
       });
@@ -237,15 +201,12 @@ function doRequest(req, res) {
         bookdeletebody += chunk;
       });
       req.on('end', function() {
-        var bookdelete = fs.readFileSync('./views/bookdelete.ejs', 'utf8');
         connection.query('DELETE FROM books WHERE ' + bookdeletebody + ';', (err, rows, fields) => {
           if (err) throw err;
-          var bookdeleteejs = ejs.render(bookdelete, {
+          var bookdelete = ejs.render(fs.readFileSync('./views/bookdelete.ejs', 'utf8'), {
             message:"書籍データ削除"
           });
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          res.write(bookdeleteejs);
-          res.end();
+          doRes(bookdelete, res, 200, {'Content-Type': 'text/html'});
         });
       });
     }
