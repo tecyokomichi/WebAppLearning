@@ -93,7 +93,7 @@ function doRequest(req, res) {
         authordeletebody += chunk;
       });
       req.on('end', function() {
-        doDelte(fs.readFileSync('./views/authordelete.ejs', 'utf8'), res, 'DELETE FROM authors WHERE ' + authordeletebody + ';', { 'Content-Type': 'text/html' }, { message:'作者データ削除' });
+        doDelete(fs.readFileSync('./views/authordelete.ejs', 'utf8'), res, 'DELETE FROM authors WHERE ' + authordeletebody + ';', { 'Content-Type': 'text/html' }, { message:'作者データ削除' });
       });
     }
   }else if(uri == "/bookindex"){
@@ -195,7 +195,7 @@ function doRequest(req, res) {
         bookdeletebody += chunk;
       });
       req.on('end', function() {
-        doDelte(fs.readFileSync('./views/bookdelete.ejs', 'utf8'), res, 'DELETE FROM books WHERE ' + bookdeletebody + ';', { 'Content-Type': 'text/html' }, { message:'図書データ削除' });
+        doDelete(fs.readFileSync('./views/bookdelete.ejs', 'utf8'), res, 'DELETE FROM books WHERE ' + bookdeletebody + ';', { 'Content-Type': 'text/html' }, { message:'図書データ削除' });
       });
     }
   }else if(uri == "/badrequest"){
@@ -271,7 +271,7 @@ function doRes(f, r, c, o) {
   r.end();
 }
 
-function doDelte(f, r, s, o1, o2) {
+function doDelete(f, r, s, o1, o2) {
   connection.query(s, (err, rows, fields) => {
     if (err) throw err;
     var deletef = ejs.render(f, o2);
