@@ -93,13 +93,7 @@ function doRequest(req, res) {
         authordeletebody += chunk;
       });
       req.on('end', function() {
-        connection.query('DELETE FROM authors WHERE ' + authordeletebody + ';', (err, rows, fields) => {
-          if (err) throw err;
-          var authordelete = ejs.render(fs.readFileSync('./views/authordelete.ejs', 'utf8'), {
-            message:"作者データ削除"
-          });
-          doRes(authordelete, res, 200, {'Content-Type': 'text/html'});
-        });
+        doDelte(fs.readFileSync('./views/authordelete.ejs', 'utf8'), res, 'DELETE FROM authors WHERE ' + authordeletebody + ';', { 'Content-Type': 'text/html' }, { message:'作者データ削除' });
       });
     }
   }else if(uri == "/bookindex"){
@@ -201,13 +195,7 @@ function doRequest(req, res) {
         bookdeletebody += chunk;
       });
       req.on('end', function() {
-        connection.query('DELETE FROM books WHERE ' + bookdeletebody + ';', (err, rows, fields) => {
-          if (err) throw err;
-          var bookdelete = ejs.render(fs.readFileSync('./views/bookdelete.ejs', 'utf8'), {
-            message:"書籍データ削除"
-          });
-          doRes(bookdelete, res, 200, {'Content-Type': 'text/html'});
-        });
+        doDelte(fs.readFileSync('./views/bookdelete.ejs', 'utf8'), res, 'DELETE FROM books WHERE ' + bookdeletebody + ';', { 'Content-Type': 'text/html' }, { message:'図書データ削除' });
       });
     }
   }else if(uri == "/badrequest"){
