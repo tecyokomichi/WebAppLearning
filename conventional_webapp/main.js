@@ -55,7 +55,7 @@ function doRequest(req, res) {
             message:'エラー 入力に不備があります',
             detail:errors[0]
           });
-          doRes(badrequest, res, 200, {'Content-Type': 'text/html'});
+          doRes(badrequest, res, 400, {'Content-Type': 'text/html'});
           return;
         }
         if(authoro.id){
@@ -165,7 +165,7 @@ function doRequest(req, res) {
     doRes(fs.readFileSync('./style.css', 'utf8'), res, 200, {'Content-Type': 'text/css'});
   }else{
     var notfind = fs.readFileSync('./views/notfind.html', 'utf8');
-    doRes(notfind, res, 200, {'Content-Type': 'text/html'});
+    doRes(notfind, res, 403, {'Content-Type': 'text/html'});
   }
 }
 
