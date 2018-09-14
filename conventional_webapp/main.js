@@ -216,12 +216,16 @@ function returnBookParam(a) {
 function prmCheckAuthor(o) {
   var r = [];
   var name = o.name;
+  var age = o.age;
   if(name.length){
     if(name.length > 10){
      r.push('名称が長過ぎます');
     }
   }else{
     r.push('名称が入力されていません');
+  }
+  if(isNaN(age)){
+    r.push('年齢は数値でなければいけません');
   }
   return r;
 }
