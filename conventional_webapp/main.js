@@ -48,23 +48,29 @@ function doRequest(req, res) {
         var authorId = 0;
         prms = authorshowbody.split('&');
         var authoro = returnAuthorParam(prms);
-        var errors = prmCheckAuthor(authoro);
-        if(errors && errors.length){
-          var badrequeste = ejs.render(fs.readFileSync('./views/badrequest.ejs', 'utf8'), {
-            title:'400 BadRequest',
-            message:'エラー 入力に不備があります',
-            detail:errors[0]
-          });
-          doRes(badrequest, res, 400, {'Content-Type': 'text/html'});
-          return;
+        if(authoro.name || authoro.age){
+          var errors = prmCheckAuthor(authoro);
+          if(errors && errors.length){
+            var badrequeste = ejs.render(fs.readFileSync('./views/badrequest.ejs', 'utf8'), {
+              title:'400 BadRequest',
+              message:'エラー 入力に不備があります',
+              detail:errors[0]
+            });
+            doRes(badrequest, res, 400, {'Content-Type': 'text/html'});
+            return;
+          }
         }
         if(authoro.id){
           authorId = authoro.id;
-          authorsql = "UPDATE authors SET name=" + "'" + authoro.name + "', age=" + authoro.age + ", updated_at=" + "'" + now + "'" + " WHERE id=" + authoro.id + ";"
+          if(authoro.name || authoro.age){
+            authorsql = "UPDATE authors SET name=" + "'" + authoro.name + "', age=" + authoro.age + ", updated_at=" + "'" + now + "'" + " WHERE id=" + authoro.id + ";"
+          }else{
+            authorsql = "SELECT * FROM authors WHERE id=" + authoro.id + ";";
+          }
         }else{
           authorsql = "INSERT INTO authors (name, age, created_at, updated_at) VALUES (" + "'" + authoro.name + "', " + authoro.age + ", '" + now + "', '" + now + "'" +  ");";
         }
-        doshow(authorId, fs.readFileSync('./views/authorindex.ejs', 'utf8'), res, authorsql, "SELECT * FROM authors WHERE id=", { 'Content-Type': 'text/html' });
+        doshow(authorId, fs.readFileSync('./views/authorshow.ejs', 'utf8'), res, authorsql, "SELECT * FROM authors WHERE id=", { 'Content-Type': 'text/html' });
       });
     }
   }else if(uri == "/authordelete"){
@@ -142,11 +148,15 @@ function doRequest(req, res) {
         var booko = returnBookParam(prms);
         if(booko.id){
           bookId = booko.id;
-          booksql = "UPDATE books SET book_kind=" + booko.bookKind + ", author_id=" + booko.authorId + ", title=" + "'" + booko.title + "', updated_at=" + "'" + now + "'" + " WHERE id=" + booko.id + ";"
+          if(booko.bookKind){
+            booksql = "UPDATE books SET book_kind=" + booko.bookKind + ", author_id=" + booko.authorId + ", title=" + "'" + booko.title + "', updated_at=" + "'" + now + "'" + " WHERE id=" + booko.id + ";"
+          }else{
+            booksql = "SELECT * FROM books WHERE id=" + booko.id + ";"
+          }
         }else{
           booksql = "INSERT INTO books (book_kind, author_id, title, created_at, updated_at) VALUES (" + booko.bookKind + ", " + booko.authorId + ", '" + booko.title + "', '" + now + "', '" + now + "'" +  ");";
         }
-        doshow(bookId, fs.readFileSync('./views/bookindex.ejs', 'utf8'), res, booksql, "SELECT * FROM books WHERE id=", { 'Content-Type': 'text/html' })
+        doshow(bookId, fs.readFileSync('./views/bookshow.ejs', 'utf8'), res, booksql, "SELECT * FROM books WHERE id=", { 'Content-Type': 'text/html' })
       });
     }
   }else if(uri == "/bookdelete"){
