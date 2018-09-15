@@ -194,8 +194,12 @@ function returnAuthorParam(a) {
   }
   if(r.length == 3){
     return { id:r[0], name:r[1], age:r[2] };
-  }else{
+  }else if(r.length == 2){
     return { name:r[0], age:r[1] };
+  }else if(r.length == 1){
+    return { id:r[0] };
+  }else{
+    return { };
   }
 }
 
@@ -204,12 +208,15 @@ function returnBookParam(a) {
   for(var i=0; i<a.length; i++){
     var prms = a[i].split('=');
     r.push(decodeURIComponent(prms[1]));
-    console.log(r)
   }
-  if(r.length == 4){
-    return { id:r[0], bookKind:r[1], authorId:r[2], title:r[3] };
-  }else{
+  if(r.length == 5){
+    return { id:r[0], bookKind:r[1], authorId:r[2], title:r[3], isLended:r[4] };
+  }else if(r.length == 3){
     return { bookKind:r[0], authorId:r[1], title:r[2] };
+  }else if(r.length == 1){
+    return{ id:r[0] };
+  }else{
+    return { };
   }
 }
 
