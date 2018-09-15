@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <link href="../style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="detailBody">
+  <header>
+    <h1 id="h1"><%= title %></h1>
+  </header>
+  <div class="flex">
+    <div class="showTitle">
+      <label>id: </label>
+    </div>
+    <div class="showValue">
+      <label><%= author.id%></label>
+    </div>
+  </div>
+  <div class="flex">
+    <div class="showTitle">
+      <label class="showTitle">名称: </label>
+    </div>
+    <div class="showValue">
+      <label><%= author.name %></label>
+    </div>
+  </div>
+  <div class="flex">
+    <div class="showTitle">
+      <label class="showTitle">年齢: </label>
+    </div>
+    <div class="showValue">
+      <label><%= author.age %></label>
+    </div>
+  </div>
+  <h2 id="h2">著作一覧 <%= books.length %> 件</h2>
+  <table id="bookstable">
+    <tr id="header">
+      <td class="rowTitle">id</td><td class="rowTitle">タイトル</td>
+    </tr>
+    <% books.forEach(function(book) { %>
+      <tr>
+        <td class="intvalue" width="5%"><%= book.id %></td>
+        <td width="95%"><%= book.title %></td>
+      </tr>
+    <% }); %>
+  </table>
+  <div class="flex">
+    <form action="./authoredit" method="post">
+      <input type="submit" value="編集">
+      <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+    </form>
+    <form action="http://localhost:3939/authorindex">
+      <input type="submit" value="作者一覧">
+    </form>
+  </div>
+</body>
+
+</html>
+
