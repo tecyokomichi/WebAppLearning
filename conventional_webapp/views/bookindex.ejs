@@ -12,21 +12,27 @@
   </header>
   <input id="filterInput" placeholder="キーワード入力"/>
   <button type="button" id="do_filter" onClick="filterOnInput()">絞込</button>
-  <table id="bookstable" border='1'>
-    <tr id="header">
-      <td>id</td><td>タイトル</td><td> </td><td> </td>
+  <table id="bookstable" width="100%" border='1'>
+    <tr id="header" width="100%">
+      <td class="rowTitle" width="5%">id</td><td class="rowTitle" width="80%">タイトル</td><td class="rowTitle" width="5%"> </td><td class="rowTitle" width="5%"> </td><td class="rowTitle" width="5%"> </td>
     </tr>
     <% books.forEach(function(book) { %>
-      <tr id=<%= book.title %>>
+      <tr id=<%= book.title %> width="100%">
         <td class="intvalue" width="5%"><%= book.id %></td>
-        <td width="95%"><%= book.title %></td>
-        <td>
+        <td width="80%"><%= book.title %></td>
+        <td width="5%">
+          <form action="./bookshow" method="post">
+            <input type="submit" value="詳細">
+            <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+          </form>
+        </td>
+        <td width="5%">
           <form action="./bookedit" method="post">
             <input type="submit" value="編集">
             <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
           </form>
         </td>
-        <td>
+        <td width="5%">
           <form action="./bookdelete" method="post">
             <input type="submit" value="削除">
             <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
@@ -35,7 +41,9 @@
       </tr>
     <% }); %>
   </table>
+  <hr width="100%" size="4" color="#CCCCCC">
   <div>
+    <input type="button" onclick="location.href='http://localhost:3939/booknew'" value="新規登録">
     <input type="button" onclick="location.href='http://localhost:3939'" value="トップへ">
   </div>
 </body>
