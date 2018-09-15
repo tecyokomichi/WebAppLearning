@@ -10,43 +10,33 @@
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
-  <table id="bookstable" border='1'>
-    <tr id="header">
-      <td>id</td><td>区分</td><td>作者</td><td>タイトル</td><td> </td><td> </td>
-    </tr>
-    <% books.forEach(function(book) { %>
-      <tr>
-        <form action="./bookshow" method="post">
-          <td>
-            <input type="text" size="5" value="<%= book.id %>" disabled="readonly"/>
-            <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
-          </td>
-          <td>
-            <select id="book_kind_input" name="book_kind">
-              <option value="0">不明</option>
-              <option value="1">ハードカバー</option>
-              <option value="2">文庫</option>
-              <option value="3">その他</option>
-            </select>
-            <input id="book_kind" type="hidden" name="book_kind" value="<%= book.book_kind %>">
-          </td>
-          <td>
-            <select id="author_id_input" name="author_id_input" value="<%= book.author_id %>">
-            <% var index; %>
-            <% for(var i=0; i<authors.length; i++){ %>
-            <%   if(authors[i].id == book.author_id) index = i; %>
-            <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
-            <% } %>
-            </select>
-            <input id="author_id_index" type="hidden" value="<%= index %>">
-          </td>
-          <td><input type="text" name="title" size="100%" value="<%= book.title %>"/></td>
-          <td><input type="submit" value="保存"></td>
-          <td><input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル"></td>
-        </form>
-      </tr>
-    <% }); %>
-  </table>
+  <form action="./bookshow" method="post">
+    <label class="editTitle">ID: </label>
+    <input type="text" size="5" value="<%= book.id %>" disabled="readonly"/>
+    <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+    <label class="editTitle">区分: </label>
+    <select id="book_kind_input" name="book_kind">
+      <option value="0">不明</option>
+      <option value="1">ハードカバー</option>
+      <option value="2">文庫</option>
+      <option value="3">その他</option>
+    </select>
+    <input id="book_kind" type="hidden" value="<%= book.book_kind %>">
+    <label class="editTitle">作者: </label>
+    <select id="author_id_input" name="author_id_input" value="<%= book.author_id %>">
+      <% var index; %>
+      <% for(var i=0; i<authors.length; i++){ %>
+      <%   if(authors[i].id == book.author_id) index = i; %>
+      <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
+      <% } %>
+    </select>
+    <input id="author_id_index" type="hidden" value="<%= index %>">
+    <label class="editTitle">タイトル: </label><input type="text" name="title" size="50%" value="<%= book.title %>"/>
+    <label class="editTitle">状態: </label><input type="checkbox" id="is_lended" onclick="is_lended_input.value = this.checked == true ? 1:0">
+    <input id="is_lended_input" name="is_lended" type="hidden" value="<%= book.is_lended %>">
+    <input type="submit" value="保存">
+    <input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル">
+  </form>
 
   <script type="text/javascript">
     window.onload = function(){
@@ -56,9 +46,10 @@
       var authorIdInput = document.getElementById('author_id_input');
       var authorIdIndex = document.getElementById('author_id_index');
       authorIdInput.selectedIndex = authorIdIndex.value;
+      var isLended = document.getElementById('is_lended');
+      var isLendedInput = document.getElementById('is_lended_input');
+      isLended.checked = isLendedInput.value == 1 ? true:false;
     }
   </script>
-
 </body>
-
 </html>

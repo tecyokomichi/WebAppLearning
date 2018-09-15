@@ -10,36 +10,25 @@
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
-  <table id="authorstable" border='1'>
-    <tr id="header">
-      <td>区分</td><td>作者</td><td>タイトル</td><td> </td><td> </td>
-    </tr>
-     <tr>
-       <form action="./bookshow" method="post">
-          <td>
-            <select id="book_kind_input" name="book_kind">
-              <option value="0">不明</option>
-              <option value="1">ハードカバー</option>
-              <option value="2">文庫</option>
-              <option value="3">その他</option>
-            </select>
-            <input id="book_kind" type="hidden" name="book_kind" value="<%= book_kind %>">
-          </td>
-          <td>
-            <select id="author_id_input" name="author_id">
-            <% for(var i=0; i<authors.length; i++){ %>
-            <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
-            <% } %>
-            </select>
-          </td>
-          <td><input type="text" name="title" size="100%" value="<%= title %>"/></td>
-          <td><input type="submit" value="登録"></td>
-          <td><input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル"></td>
-        </form>
-      </form>
-    </tr>
-  </table>
+  <form action="./bookshow" method="post">
+    <label class="editTitle">区分: </label>
+    <select id="book_kind_input" name="book_kind">
+      <option value="0">不明</option>
+      <option value="1">ハードカバー</option>
+      <option value="2">文庫</option>
+      <option value="3">その他</option>
+    </select>
+    <label class="editTitle">作者: </label>
+    <select id="author_id_input" name="author_id">
+      <% for(var i=0; i<authors.length; i++){ %>
+      <option value="<%= authors[i].id %>"><%= authors[i].name %></option>
+      <% } %>
+    </select>
+    <label class="editTitle">タイトル: </label>
+    <input type="text" name="title" size="50%" value=""/>
+    <input type="submit" value="登録">
+    <input type="button" onclick="location.href='http://localhost:3939/bookindex'" value="キャンセル">
+  </form>
 </body>
-
 </html>
 
