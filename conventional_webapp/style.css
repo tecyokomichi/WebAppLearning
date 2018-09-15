@@ -2,6 +2,10 @@ h1 {
   background-color: #AAFFFF;
 }
 
+h2 {
+  background-color: #CCFFCC;
+}
+
 button {
   font-weight: bold;
 }
@@ -12,15 +16,33 @@ hr {
   color: #CCCCCC;
 }
 
+table, tr, td {
+  table-layout: fixed;
+  border: 1px #000000 solid;
+  min-height: 1px;
+}
+
+.errorh {
+  color: #FF0040;
+}
+
 .detailBody {
   font-size: 20px;
+}
+
+.rowTitle {
+  background-color: #E6E6E6;
 }
 
 .intvalue {
  text-align: right; 
 }
 
-showTitle {
+.editTitle {
+  background-color: #E6E6E6;
+}
+
+.showTitle {
   width: 90px;
   background-color: #CCFFEE;
 }
@@ -29,7 +51,16 @@ showTitle {
   background-color: #CCCCCC;
 }
 
-.flex{
+.topFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.flex {
   padding: 0.5% 0;
   display: flex;
   flex-direction: row;
