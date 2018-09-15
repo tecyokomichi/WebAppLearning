@@ -236,16 +236,24 @@ function doRes(f, r, c, o) {
   r.end();
 }
 
-function doshow(tid, f, r, s, as, o) {
+function doshow(tid, f, r, s, as, aas, o) {
   connection.query(s, function(err, result){
     if (err) throw err;
     if(result.insertId) tid = result.insertId;
     var afterSql = as + tid + ";";
     connection.query(afterSql, (err, rows, fields) => {
       if (err) throw err;
-      var ob = s.indexOf('authors') != -1 ? { title:"作者詳細", authors:rows }:{ title:"書籍詳細", books:rows };
-      var showf = ejs.render(f, ob)
-      doRes(showf, r, 200, o);
+      var addAfterSql = '';
+      if(s.indexOf('authors') != -1){
+        addAfterSql = aas + tid;
+      }else{
+        addAfterSql = aas + rows[0].author_id;
+      }
+      connection.query(addAfterSql, (er, rs, fs) => {
+        var ob = s.indexOf('authors') != -1 ? { title:"作者詳細", author:rows[0], books:rs }:{ title:"書籍詳細", book:rows[0], author:rs[0] };
+        var showf = ejs.render(f, ob)
+        doRes(showf, r, 200, o);
+      });
     });
   });
 }
