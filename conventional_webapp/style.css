@@ -6,7 +6,31 @@ button {
   font-weight: bold;
 }
 
+hr {
+  width: 100%;
+  size: 4px;
+  color: #CCCCCC;
+}
+
+.detailBody {
+  font-size: 20px;
+}
+
 .intvalue {
  text-align: right; 
 }
 
+showTitle {
+  width: 90px;
+  background-color: #CCFFEE;
+}
+
+.showValue {
+  background-color: #CCCCCC;
+}
+
+.flex{
+  padding: 0.5% 0;
+  display: flex;
+  flex-direction: row;
+}
