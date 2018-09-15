@@ -5,31 +5,21 @@
   <title><%= title %></title>
   <link href="../style.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
-  <table id="authorstable" border='1'>
-    <tr id="header">
-      <td>id</td><td>名称</td><td>年齢</td><td> </td><td> </td>
-    </tr>
-    <% authors.forEach(function(author) { %>
-      <tr>
-        <form action="./authorshow" method="post">
-          <td>
-            <input type="text" size="5" value="<%= author.id %>" disabled="readonly"/>
-             <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
-          </td>
-          <td><input type="text" name="name" size="100%" value="<%= author.name %>"/></td>
-          <td><input type="text" name="age" value="<%= author.age %>"/></td>
-          <td><input type="submit" value="保存"></td>
-          <td><input type="button" onclick="location.href='http://localhost:3939/authorindex'" value="キャンセル"></td>
-        </form>
-      </tr>
-    <% }); %>
-  </table>
+  <form action="./authorshow" method="post">
+    <label class="editTitle">ID: </label>
+    <input type="text" size="5" value="<%= author.id %>" disabled="readonly"/>
+    <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+    <label class="editTitle">名称: </label>
+    <input type="text" name="name" size="50%" value="<%= author.name %>"/>
+    <label class="editTitle">年齢: </label>
+    <input type="text" name="age" size="5em" value="<%= author.age %>"/>
+    <input type="submit" value="保存">
+    <input type="button" onclick="location.href='http://localhost:3939/authorindex'" value="キャンセル">
+  </form>
 </body>
-
 </html>
 

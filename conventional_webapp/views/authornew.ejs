@@ -5,25 +5,18 @@
   <title><%= title %></title>
   <link href="../style.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
-  <table id="authorstable" border='1'>
-    <tr id="header">
-      <td>名称</td><td>年齢</td><td> </td><td> </td>
-    </tr>
-     <tr>
-       <form action="./authorshow" method="post">
-         <td><input type="text" name="name" size="100%" value="<%= name %>"/></td>
-         <td><input type="text" name="age" value="<%= age %>"/></td>
-         <td><input type="submit" value="登録"></td>
-         <td><input type="button" onclick="location.href='http://localhost:3939/authorindex'" value="キャンセル"></td>
-      </form>
-    </tr>
-  </table>
+  <form action="./authorshow" method="post">
+    <label class="editTitle">名称: </label>
+    <input type="text" name="name" size="50%"/>
+    <label class="editTitle">年齢: </label>
+    <input type="text" name="age" size="5em"/>
+    <input type="submit" value="登録">
+    <input type="button" onclick="location.href='http://localhost:3939/authorindex'" value="キャンセル">
+  </form>
 </body>
-
 </html>
 
