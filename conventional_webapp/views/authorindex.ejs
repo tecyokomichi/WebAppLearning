@@ -10,41 +10,45 @@
   <header>
     <h1 id="h1"><%= title %></h1>
   </header>
+
   <input id="filterInput" placeholder="キーワード入力"/>
   <button type="button" id="do_filter" onClick="filterOnInput()">絞込</button>
   <table id="authorstable" border='1'>
-    <tr id="header">
-      <td>id</td><td>名称</td><td>年齢</td><td> </td><td> </td><td> </td>
+    <tr id="header" width="100%">
+      <td class="rowTitle" width="5%">id</td><td class="rowTitle" width="65%">名称</td><td class="rowTitle" width="10%">年齢</td><td class="rowTitle" width="5%"> </td><td class="rowTitle" width="5%"> </td><td class="rowTitle" width="10%"> </td>
     </tr>
     <% authors.forEach(function(author) { %>
-      <tr>
+      <tr id="tr_<%= author.id %>">
         <td class="intvalue" width="5%"><%= author.id %></td>
-        <td width="85%"><%= author.name %></td>
+        <td id="td_name" width="90%"><%= author.name %></td>
         <td class="intvalue" width="10%"><%= author.age %></td>
-        <td>
+        <td width="10%">
+          <form action="./authorshow" method="post">
+            <input type="submit" value="詳細">
+            <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
+          </form>
+        </td>
+        <td width="5%">
           <form action="./authoredit" method="post">
             <input type="submit" value="編集">
             <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
           </form>
         </td>
-        <td>
+        <td width="5%">
           <form action="./authordelete" method="post">
             <input type="submit" value="削除">
-            <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
-          </form>
-        </td>
-        <td>
-          <form action="./bookindex" method="post">
-            <input type="submit" value="作品一覧">
             <input id="authorid" type="hidden" name="id" value="<%= author.id %>">
           </form>
         </td>
       </tr>
     <% }); %>
   </table>
+  <hr>
   <div>
+    <input type="button" onclick="location.href='http://localhost:3939/authornew'" value="新規登録">
     <input type="button" onclick="location.href='http://localhost:3939'" value="トップへ">
   </div>
+
 </body>
 
 </html>
