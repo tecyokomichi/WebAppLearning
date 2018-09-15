@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <link href="../style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="detailBody">
+  <header>
+    <h1 id="h1"><%= title %></h1>
+    <h2 id="h2">作者: <%= author && author.name ? author.name : '' %></h2>
+  </header>
+    <div class="flex">
+      <div class="showTitle">
+        <label>id: </label>
+      </div>
+      <div class="showValue">
+        <label><%= book.id%></label>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="showTitle">
+        <label>区分: </label>
+      </div>
+      <div class="showValue">
+        <label><%= book.book_kind==0 ? "不明": book.book_kind==1 ? "ハードカバー" : book.book_kind==2 ? "文庫" : "その他" %></label>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="showTitle">
+        <label>タイトル: </label>
+      </div>
+      <div class="showValue">
+        <label><%= book.title %></label>
+      </div>
+    </div>
+
+
+    <div class="flex">
+      <div class=" showTitle">
+        <label>状態: </label>
+      </div>
+      <div class="showValue">
+        <label><%= book.is_lended ? "貸出中" : "貸出可" %></label>
+      </div>
+    </div>
+  <hr>
+  <div class="flex">
+    <form action="./bookedit" method="post">
+      <input type="submit" value="編集">
+      <input id="bookid" type="hidden" name="id" value="<%= book.id %>">
+    </form>
+    <form action="http://localhost:3939/bookindex">
+      <input type="submit" value="書籍一覧">
+    </form>
+  </div>
+</body>
+
+</html>
+
