@@ -13,9 +13,9 @@ DISTRIB_DESCRIPTION="Ubuntu 16.04.5 LTS"
   
 Express 導入  
 ```
-npm install express-generator —save
+npm install express-generator --save
 ```
-`—save` オプションをつけてローカルにインストールします  
+`--save` オプションをつけてローカルにインストールします  
   
 雛形作成  
 ```
