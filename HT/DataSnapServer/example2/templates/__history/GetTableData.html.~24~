@@ -1,0 +1,187 @@
+<!-- !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
+<html>
+<head>
+<title>GetTableData
+</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script type="text/javascript" src="js/base64.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="js/serverfunctionexecutor.js"></script>
+<script type="text/javascript" src="js/connection.js"></script>
+<script type="text/javascript" src="<#serverfunctionsjs>"></script>
+<script type="text/javascript">
+
+var loginRequired = false;
+
+function onLoad()
+{
+  showTime();
+  loginRequired = <#loginRequired>;
+  setConnection('<#host>', '<#port>', '<#urlpath>');
+  if (loginRequired)
+  {
+    showLogin(true);
+  }
+  else
+  {
+    showLogin(false);
+  }
+}
+
+function onLogin()
+{
+  if (loginRequired)
+  {
+    if (AdminInst == null)
+    {
+        if (!setCredentials(document.getElementById('userField').value, document.getElementById('passwrdField').value))
+        {
+          loginCorrect(false);
+          return;
+        }
+        else
+        {
+          loginCorrect(true);
+          showLogin(false);
+        }
+    }
+  }
+  else
+    showLogin(false);
+}
+
+function loginCorrect(isCorrect)
+{
+  var errorDiv = document.getElementById('loginError');
+  if ( errorDiv != null )
+  {
+    errorDiv.innerHTML= isCorrect ? "" : "login incorrect";
+  }
+}
+
+function showLogin(show)
+{
+  var loginDiv = document.getElementById('logindiv');
+  var contentDiv = document.getElementById('contentdiv');
+  if (show)
+  {
+      // show div
+      loginDiv.style.display="block";
+      contentDiv.style.display="none";
+  }
+  else
+  {
+      // show div
+      loginDiv.style.display="none";
+      contentDiv.style.display="block";
+  }
+}
+
+function showTime()
+{
+  var d = new Date();
+  var h = d.getHours();
+  var m = d.getMinutes();
+  var s = d.getSeconds();
+  var timeElement = document.getElementById('timeElement');
+  if ( timeElement != null )
+  {
+    timeElement.innerText=
+      (h <= 9 ? "0" : "") + h + ":" +
+      (m <= 9 ? "0" : "") + m + ":" +
+      (s <= 9 ? "0" : "") + s;
+  }
+}
+
+function serverMethods()
+{
+  return new <#classname>(connectionInfo);
+}
+
+function onReverseStringClick()
+{
+  if (loginRequired && (AdminInst == null))
+  {
+    showLogin(true);
+    return;
+  }
+  var valueField = document.getElementById('valueField');
+  var s = serverMethods().ReverseString(valueField.value);
+  valueField.value = s.result;
+}
+
+
+function ongetButtonClick()
+{
+  if (loginRequired && (AdminInst == null))
+  {
+    showLogin(true);
+    return;
+  }
+  window.onload = insertData;
+
+  var valueField = document.getElementById('edtRequestSQL');
+//  var json = WebModule1GetAction;
+
+      var json={"F002":"3850","F003":"âFìsã{Å@ÇRÇOÇOÇ»ÇRÇWÇTÇO","F010":"∆Øª›","F011":"Ω√∞ºﬁ±","F004":"20030418"}
+
+      function insertData () {
+        // ä˘ë∂ÇÃ table óvëfÇ©ÇÁ tbody ÇéÊìæÇ∑ÇÈ
+        var tbody = document.querySelector('table tbody')
+
+        // tbody Ç… tr Çì¸ÇÍÇƒÇ¢Ç≠
+        json.forEach(function (row) {
+          var column1 = document.createElement('td')
+          column1.innerText = row.column1
+
+          var column2 = document.createElement('td')
+          column2.innerText = row.column2
+
+          var column3 = document.createElement('td')
+          column3.innerText = row.column3
+
+          var column4 = document.createElement('td')
+          column4.innerText = row.column4
+
+          var column5 = document.createElement('td')
+          column5.innerText = row.column5
+
+          var tr = document.createElement('tr')
+          tr.appendChild(column1)
+          tr.appendChild(column2)
+          tr.appendChild(column3)
+          tr.appendChild(column4)
+          tr.appendChild(column5)
+
+          tbody.appendChild(tr)
+        })
+      }
+}
+</script>
+</head>
+  <body>
+    <h1><font face="ÉÅÉCÉäÉI">&nbsp;GetTableData
+</font></h1>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; requestSQL&nbsp; <input style="HEIGHT: 23px; WIDTH: 815px" maxlength="50" size="67" name="edtRequestSQL">
+      <input id="getButton" type="submit" value="GET" onclick="ongetButtonClick" />
+
+</div>
+    <div class="contentdiv">&nbsp;
+    </div>
+    <div class="contentdiv">
+    <table style="cellspacing: 1" cellpadding="1" width="985" border="1">
+      <thead>
+        <tr><th>F002
+</th><th>F003
+</th><th>F010
+</th><th>F011
+</th><th>F004
+</th></tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>
