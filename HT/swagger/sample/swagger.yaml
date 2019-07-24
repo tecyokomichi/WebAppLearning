@@ -1,0 +1,1309 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: HT Web API
+schemes: 
+  - http
+  - https
+basePath: /htv1
+paths:
+  /tom:
+    get:
+      tags:
+        - tom
+      summary: Get all Tom
+      description: 得意先
+      parameters: 
+        - 
+          description: コード
+          name: code
+          type: string
+          in: query
+        -
+          description: カナコード
+          name: kana
+          type: string
+          in: query
+        -
+          description: 名称
+          name: name
+          type: string
+          in: query
+        -
+          description: 電話番号
+          name: phonenumber
+          type: string
+          in: query
+      responses:
+        '200':
+          description: A JSON array of Tom model
+          schema:
+            title: ArrayOfTom
+            type: array
+            items:
+              $ref: '#/definitions/Tom'
+        '404':
+          description: Tom not found
+      security:
+        - api_key: []
+  '/tom/{tomId}':
+    get:
+      tags:
+        - tom
+      summary: Find Tom by ID
+      description: Returns a single Tom
+      operationId: getTomById
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: tomId
+          in: path
+          description: ID of tom to return
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Tom'
+        '404':
+          description: Tom not found
+      security:
+        - api_key: []
+  /srm:
+    get:
+      tags:
+        - srm
+      summary: Get all Srm
+      description: 車両
+      parameters: 
+        - 
+          description: 車両コード
+          name: code
+          type: string
+          in: query
+        - 
+          description: 得意先カナコード
+          name: tomKanaCode
+          type: string
+          in: query
+      responses:
+        '200':
+          description: A JSON array of Srm model
+          schema:
+            title: ArrayOfSrm
+            type: array
+            items:
+              $ref: '#/definitions/Srm'
+        '404':
+          description: Srm not found
+      security:
+        - api_key: []
+  '/srm/{srmId}':
+    get:
+      tags:
+        - srm
+      summary: Find SRM by ID
+      description: Returns a single Srm
+      operationId: getSrmById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: srmId
+          in: path
+          description: ID of srm to return
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Srm'
+        '404':
+          description: Srm not found
+      security:
+        - api_key: []
+  '/rui/{ruiId}':
+    get:
+      tags:
+        - rui
+      summary: Find RUI by ID
+      description: Returns a single Rui
+      operationId: getRuiById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: ruiId
+          in: path
+          description: ID of rui to return
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Rui'
+        '404':
+          description: Rui not found
+      security:
+        - api_key: []
+  '/ru2/{ru2Id}':
+    get:
+      tags:
+        - ru2
+      summary: Find Ru2 by ID
+      description: Returns a single Ru2
+      operationId: getRu2ById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: ru2Id
+          in: path
+          description: ID of ru2 to return
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Ru2'
+        '404':
+          description: Ru2 not found
+      security:
+        - api_key: []
+  '/js7ru2/{js7ru2Id}':
+    get:
+      tags:
+        - js7ru2
+      summary: Find Js7Ru2 by ID
+      description: Returns a single Js7Ru2
+      operationId: getJs7Ru2ById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: js7ru2Id
+          in: path
+          description: ID of js7ru2 to return
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Js7Ru2'
+        '404':
+          description: Js7Ru2 not found
+      security:
+        - api_key: []
+  /user/login:
+    post:
+      tags:
+        - users
+      summary: ユーザ認証
+      description: ユーザ ID とパスワードで認証
+      operationId: loginUser
+      parameters:
+        - name: userId
+          in: query
+          description: ユーザ ID
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: パスワード
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+    flow: implicit
+    scopes:
+      'write:pets': modify pets in your account
+      'read:pets': read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  user:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      user_id:
+        type: string
+      password:
+        type: string
+      user_lebel:
+        type: integer
+        format: int32
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+    required:
+      - id
+      - user_id
+      - password
+    xml:
+      name: user
+  Tom:
+    type: object
+    properties:
+      F001:
+        type: string
+      F002:
+        type: string
+      F003:
+        type: string
+      F004:
+        type: string
+      F005:
+        type: string
+      F006:
+        type: string
+      F007:
+        type: string
+      F008:
+        type: string
+      F009:
+        type: string
+      F010:
+        type: string
+      F011:
+        type: string
+      F012:
+        type: string
+      F013:
+        type: string
+      F014:
+        type: string
+      F015:
+        type: string
+      F016:
+        type: string
+      F017:
+        type: string
+      F018:
+        type: integer
+        format: int32
+      F019:
+        type: string
+      F020:
+        type: string
+      F021:
+        type: string
+      F022:
+        type: string
+      F023:
+        type: string
+      F024:
+        type: string
+      F025:
+        type: string
+      F026:
+        type: integer
+        format: int64
+      F027:
+        type: integer
+        format: int64
+      F028:
+        type: integer
+        format: int64
+      F029:
+        type: string
+      F030:
+        type: integer
+        format: int64
+      F031:
+        type: integer
+        format: int64
+      F032:
+        type: integer
+        format: int64
+      F033:
+        type: integer
+        format: int64
+      F034:
+        type: string
+      F035:
+        type: string
+      F036:
+        type: string
+      F037:
+        type: string
+      F038:
+        type: string
+      F039:
+        type: string
+      F040:
+        type: string
+      F041:
+        type: string
+      F042:
+        type: string
+      F043:
+        type: string
+      F044:
+        type: string
+      F045:
+        type: string
+      F046:
+        type: string
+      F047:
+        type: string
+      F048:
+        type: string
+      F049:
+        type: string
+      F050:
+        type: integer
+        format: int32
+      ExpendInfFlg:
+        type: integer
+        format: int32
+      InfoType:
+        type: integer
+        format: int32
+      BusinessDiv:
+        type: integer
+        format: int32
+      BillsDiv:
+        type: string
+      ChargePerson:
+        type: string
+      ExtraRate1:
+        type: integer
+        format: int64
+      ExtraRate2:
+        type: integer
+        format: int64
+      ExtraRate3:
+        type: integer
+        format: int64
+      ExtraRate4:
+        type: integer
+        format: int64
+      ExtraRate5:
+        type: integer
+        format: int64
+      BirthDay:
+        type: string
+      Memo1:
+        type: string
+      UrikDef:
+        type: integer
+        format: int32
+      DealerCD:
+        type: integer
+        format: int32
+      Mail1Use:
+        type: integer
+        format: int32
+      Mail2Use:
+        type: integer
+        format: int32
+      OKUse:
+        type: integer
+        format: int32
+      PonitEnable:
+        type: integer
+        format: int32
+      PonitBase:
+        type: integer
+        format: int32
+      CorpMyNumber:
+        type: string
+      CustomerDiv1:
+        type: integer
+        format: int32
+      CustomerDiv2:
+        type: integer
+        format: int32
+    xml:
+      name: Tom
+  Srm:
+    type: object
+    properties:
+      F001:
+        type: string
+      F002:
+        type: string
+      F003:
+        type: string
+      F004:
+        type: string
+      F005:
+        type: string
+      F006:
+        type: string
+      F007:
+        type: string
+      F008:
+        type: string
+      F009:
+        type: string
+      F010:
+        type: string
+      F011:
+        type: string
+      F012:
+        type: string
+      F013:
+        type: integer
+        format: int32
+      F014:
+        type: integer
+        format: int32
+      F015:
+        type: integer
+        format: int64
+      F016:
+        type: integer
+        format: int64
+      F017:
+        type: integer
+        format: int64
+      F018:
+        type: integer
+        format: int64
+      F019:
+        type: integer
+        format: int64
+      F020:
+        type: integer
+        format: int64
+      F021:
+        type: string
+      F022:
+        type: string
+      F023:
+        type: integer
+        format: int32
+      F024:
+        type: integer
+        format: int32
+      F025:
+        type: integer
+        format: int32
+      F026:
+        type: integer
+        format: int32
+      F027:
+        type: integer
+        format: int32
+      F028:
+        type: integer
+        format: int32
+      F029:
+        type: integer
+        format: int64
+      F030:
+        type: string
+      F031:
+        type: string
+      F032:
+        type: string
+      F033:
+        type: integer
+        format: int64
+      F034:
+        type: integer
+        format: int64
+      F035:
+        type: integer
+        format: int64
+      F036:
+        type: integer
+        format: int64
+      F037:
+        type: string
+      F038:
+        type: string
+      F039:
+        type: string
+      F040:
+        type: string
+      F041:
+        type: string
+      F042:
+        type: string
+      F043:
+        type: string
+      F044:
+        type: integer
+        format: int64
+      F045:
+        type: integer
+        format: int64
+      F046:
+        type: integer
+        format: int64
+      F047:
+        type: integer
+        format: int64
+      F048:
+        type: integer
+        format: int64
+      F049:
+        type: integer
+        format: int64
+      F050:
+        type: integer
+        format: int64
+      F051:
+        type: integer
+        format: int64
+      F052:
+        type: string
+      F053:
+        type: string
+      F054:
+        type: string
+      F055:
+        type: string
+      F056:
+        type: string
+      F057:
+        type: string
+      F058:
+        type: string
+      F059:
+        type: string
+      F060:
+        type: string
+      F061:
+        type: string
+      F062:
+        type: string
+      F063:
+        type: string
+      F064:
+        type: string
+      F065:
+        type: string
+      F066:
+        type: string
+      F067:
+        type: string
+      F068:
+        type: string
+      F069:
+        type: string
+      F070:
+        type: string
+      F071:
+        type: string
+      F072:
+        type: string
+      F073:
+        type: integer
+        format: int64
+      F074:
+        type: string
+      F075:
+        type: integer
+        format: int64
+      F076:
+        type: string
+      F077:
+        type: integer
+        format: int64
+      F078:
+        type: string
+      F079:
+        type: string
+      F080:
+        type: string
+      F081:
+        type: string
+      F082:
+        type: string
+      F083:
+        type: string
+      F084:
+        type: string
+      F085:
+        type: string
+      F086:
+        type: string
+      F087:
+        type: string
+      F088:
+        type: string
+      F089:
+        type: string
+      F090:
+        type: string
+      F091:
+        type: string
+      F092:
+        type: string
+      F093:
+        type: string
+      F094:
+        type: string
+      F095:
+        type: string
+      F096:
+        type: string
+      F097:
+        type: string
+      F098:
+        type: string
+      F099:
+        type: string
+      F100:
+        type: string
+      F101:
+        type: string
+      F102:
+        type: string
+      F103:
+        type: string
+      F104:
+        type: string
+      F105:
+        type: string
+      F106:
+        type: string
+      F107:
+        type: string
+      F108:
+        type: string
+      F109:
+        type: string
+      F110:
+        type: string
+      F111:
+        type: string
+      F112:
+        type: string
+      F113:
+        type: string
+      F114:
+        type: string
+      F115:
+        type: string
+      F116:
+        type: string
+      F117:
+        type: string
+      F118:
+        type: string
+      F119:
+        type: string
+      F120:
+        type: string
+      F121:
+        type: string
+      F122:
+        type: string
+      F123:
+        type: string
+      F124:
+        type: string
+      F125:
+        type: string
+      F126:
+        type: string
+      ExpendInfFlg:
+        type: integer
+        format: int32
+      CarUseLoadID:
+        type: integer
+        format: int32
+      Odometer:
+        type: integer
+        format: int64
+      J_MekaID:
+        type: integer
+        format: int32
+      J_SNameID:
+        type: integer
+        format: int32
+      J_GreiID:
+        type: integer
+        format: int32
+      CARGUOTA3:
+        type: integer
+        format: int64
+      CARCAPACITY3:
+        type: integer
+        format: int64
+      CARWEIGHT3:
+        type: integer
+        format: int64
+      CARTWEIGHT3:
+        type: integer
+        format: int64
+      TaxReductionFlg:
+        type: integer
+        format: int32
+      TaxReductionName:
+        type: string
+      ShoEnterFlg:
+        type: integer
+        format: int32
+      OwnerModifyFlg:
+        type: string
+      OwnerModifyNmae:
+        type: string
+      OwnerModifyAdd1:
+        type: string
+      OwnerModifyAdd2:
+        type: string
+      UserModifyFlg:
+        type: string
+      UserModifyNmae:
+        type: string
+      UserModifyAdd1:
+        type: string
+      UserModifyAdd2:
+        type: string
+      OwnerModifyTikCD1:
+        type: string
+      OwnerModifyTikCD2:
+        type: string
+      OwnerModifyTikCD3:
+        type: string
+      OwnerModifyDealerCD:
+        type: integer
+        format: int32
+      userModifyTikCD1:
+        type: string
+      userModifyTikCD2:
+        type: string
+      userModifyTikCD3:
+        type: string
+      userModifyDealerCD:
+        type: integer
+        format: int32
+      SalesCarFlg:
+        type: string
+      ModelNoBk1:
+        type: string
+      ModelNoBk2:
+        type: string
+      EstimateDate:
+        type: string
+      EstimateFlg:
+        type: string
+      DispDivUpdate:
+        type: string
+        format: timestamp
+      LaborRateRank:
+        type: integer
+        format: int32
+      ExhaustChkFlg:
+        type: integer
+        format: int32
+      ExhaustText:
+        type: string
+      TakadaRecallFlg:
+        type: integer
+        format: int32
+      FeeFreeFlg:
+        type: integer
+        format: int32
+      ID:
+        type: integer
+        format: int32
+    xml:
+      name: Srm
+  Rui:
+    type: object
+    properties:
+      F001:
+        type: string
+      F002:
+        type: string
+      F003:
+        type: string
+      F004:
+        type: string
+      F005:
+        type: string
+      F006:
+        type: string
+      F007:
+        type: string
+      F008:
+        type: string
+      F009:
+        type: string
+      F010:
+        type: string
+      F011:
+        type: string
+      F012:
+        type: string
+      F013:
+        type: string
+      F014:
+        type: integer
+        format: int64
+      F015:
+        type: string
+      F016:
+        type: string
+      F017:
+        type: integer
+        format: int64
+      F018:
+        type: string
+      F019:
+        type: integer
+        format: int64
+      F020:
+        type: string
+      F021:
+        type: string
+      F022:
+        type: string
+      F023:
+        type: string
+      F024:
+        type: integer
+        format: int32
+      F025:
+        type: string
+      F026:
+        type: integer
+        format: int32
+      F027:
+        type: string
+      F028:
+        type: integer
+        format: int32
+      F029:
+        type: integer
+        format: int64
+      F030:
+        type: integer
+        format: int64
+      F031:
+        type: integer
+        format: int64
+      F032:
+        type: integer
+        format: int64
+      F033:
+        type: integer
+        format: int64
+      F034:
+        type: integer
+        format: int64
+      F035:
+        type: integer
+        format: int64
+      F036:
+        type: integer
+        format: int64
+      F037:
+        type: integer
+        format: int64
+      F038:
+        type: integer
+        format: int64
+      F039:
+        type: integer
+        format: int64
+      F040:
+        type: integer
+        format: int64
+      F041:
+        type: integer
+        format: int64
+      F042:
+        type: integer
+        format: int64
+      F043:
+        type: integer
+        format: int64
+      F044:
+        type: integer
+        format: int64
+      F045:
+        type: string
+      F046:
+        type: string
+      F047:
+        type: string
+      F048:
+        type: string
+      F049:
+        type: string
+      F050:
+        type: string
+      F051:
+        type: string
+      F052:
+        type: string
+      F053:
+        type: string
+      F054:
+        type: string
+      F055:
+        type: string
+      F056:
+        type: integer
+        format: int64
+      F057:
+        type: string
+      F058:
+        type: string
+      F059:
+        type: string
+      F060:
+        type: string
+      F061:
+        type: string
+      F062:
+        type: string
+      F063:
+        type: string
+      F064:
+        type: string
+      F065:
+        type: string
+      F066:
+        type: string
+      F067:
+        type: string
+      F068:
+        type: string
+      F069:
+        type: string
+      F070:
+        type: string
+      F071:
+        type: string
+      SamaBunName:
+        type: string
+      GinId:
+        type: integer
+        format: int32
+      KeisyouPrn:
+        type: string
+      TelPrn:
+        type: string
+      PointEnable:
+        type: integer
+        format: int32
+      PointPercent:
+        type: integer
+        format: int64
+      PointCurrTotal:
+        type: integer
+        format: int32
+      PointUse:
+        type: integer
+        format: int32
+      PointSelfLink:
+        type: string
+      TaxDiv:
+        type: string
+      SyakenDate:
+        type: string
+      AudaFlg:
+        type: integer
+        format: int32
+      AudaLinkFile:
+        type: string
+      UnsanctionFlg:
+        type: integer
+        format: int32
+      Worker1AmountK:
+        type: integer
+        format: int64
+      Worker2AmountK:
+        type: integer
+        format: int64
+      Worker3AmountK:
+        type: integer
+        format: int64
+      Worker1AmountB:
+        type: integer
+        format: int64
+      Worker2AmountB:
+        type: integer
+        format: int64
+      Worker3AmountB:
+        type: integer
+        format: int64
+      Nebiki_PercentK:
+        type: integer
+        format: int64
+      Nebiki_KingakuK:
+        type: integer
+        format: int64
+      Nebiki_GyakusanK:
+        type: integer
+        format: int64
+      Nebiki_PercentB:
+        type: integer
+        format: int64
+      Nebiki_KingakuB:
+        type: integer
+        format: int64
+      Nebiki_GyakusanB:
+        type: integer
+        format: int64
+      Use_Flg:
+        type: string
+      CarName:
+        type: string
+      UserCD:
+        type: string
+      UserName:
+        type: string
+      CustModifyFlg:
+        type: string
+      PostalCD:
+        type: string
+      Address:
+        type: string
+      PhoneNumber:
+        type: string
+      EstimatedDate:
+        type: string
+      EstimatedDatePFlg:
+        type: string
+    xml:
+      name: Uri
+  Ru2:
+    type: object
+    properties:
+      F001:
+        type: string
+      F002:
+        type: string
+      F003:
+        type: string
+      F004:
+        type: string
+      F005:
+        type: string
+      F006:
+        type: string
+      F007:
+        type: integer
+        format: int64
+      F008:
+        type: integer
+        format: int64
+      F009:
+        type: integer
+        format: int64
+      F010:
+        type: integer
+        format: int64
+      F011:
+        type: integer
+        format: int64
+      F012:
+        type: integer
+        format: int64
+      F013:
+        type: integer
+        format: int64
+      F014:
+        type: integer
+        format: int64
+      F015:
+        type: string
+      F016:
+        type: integer
+        format: int64
+      F017:
+        type: integer
+        format: int64
+      F018:
+        type: string
+      F019:
+        type: string
+      F020:
+        type: string
+      F021:
+        type: integer
+        format: int64
+      F022:
+        type: string
+      F023:
+        type: string
+      F024:
+        type: string
+      F025:
+        type: string
+      Customer:
+        type: string
+      Worker1:
+        type: string
+      Worker2:
+        type: string
+      OKDiv:
+        type: integer
+        format: int32
+      OKKeepTomCD:
+        type: string
+      OKUsedTomCD:
+        type: string
+      SBGroupDiv:
+        type: integer
+        format: int32
+      PointPercent:
+        type: integer
+        format: int64
+      Worker3:
+        type: string
+      CommentS:
+        type: string
+      CommentB:
+        type: string
+      UnsanctionFlg:
+        type: integer
+        format: int32
+    xml:
+      name: Ru2
+  Js7Ru2:
+    type: object
+    properties:
+      F001:
+        type: string
+      F002:
+        type: string
+      F003:
+        type: string
+      F004:
+        type: string
+      F005:
+        type: string
+      F006:
+        type: string
+      F007:
+        type: integer
+        format: int64
+      F008:
+        type: integer
+        format: int64
+      F009:
+        type: integer
+        format: int64
+      F010:
+        type: integer
+        format: int64
+      F011:
+        type: integer
+        format: int64
+      F012:
+        type: integer
+        format: int64
+      F013:
+        type: integer
+        format: int64
+      F014:
+        type: integer
+        format: int64
+      F015:
+        type: string
+      F016:
+        type: integer
+        format: int64
+      F017:
+        type: integer
+        format: int64
+      F018:
+        type: string
+      F019:
+        type: string
+      F020:
+        type: string
+      F021:
+        type: integer
+        format: int64
+      F022:
+        type: string
+      F023:
+        type: string
+      F024:
+        type: string
+      F025:
+        type: string
+      Customer:
+        type: string
+      Worker1:
+        type: string
+      Worker2:
+        type: string
+      OKDiv:
+        type: integer
+        format: int32
+      OKKeepTomCD:
+        type: string
+      OKUsedTomCD:
+        type: string
+      SBGroupDiv:
+        type: integer
+        format: int32
+      PointPercent:
+        type: integer
+        format: int64
+      Worker3:
+        type: string
+      CommentS:
+        type: string
+      CommentB:
+        type: string
+      UnsanctionFlg:
+        type: integer
+        format: int32
+    xml:
+      name: Js7Ru2
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

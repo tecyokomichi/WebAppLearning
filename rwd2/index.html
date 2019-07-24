@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+        <link rel="stylesheet" href="./css/stylesheet.css" />
+        <title>車両一覧</title>
+        <style>
+            table tr:nth-child(even){
+                background-color: #AAA
+            }
+        </style>
+    </head>
+    <body>
+        <p>【車両一覧】</p>
+        <div style="width: 100%">
+            <div style="font-size: 20px; vertical-align: middle;">
+                <select style="font-size: 20px; padding-bottom: 3px">
+                    <option value="1">得意先フリガナ</option>
+                    <option value="2">車両コード</option>
+                    <option value="3">通称名</option>
+                </select>
+                <input style="font-size: 20px" type="input">
+                <input type="checkbox">先頭
+                <button style="font-size: 20px">
+                    検索
+                </button>
+                
+                <span style="width: 100%; text-align: right">
+                    <label>表示順</label>
+                    <input type="radio" name="order" value="upto" checked/>昇順
+                    <input type="radio" name="order" value="downto"/>降順
+                </span>
+            </div>
+        </div>
+        <div>
+            <table width="100%" class="row-head">
+                <thead>
+                    <tr>
+                        <th class="center">車両コード</th>
+                        <th width="25%">車両登録番号</th>
+                        <th width="15%">車名</th>
+                        <th width="15%">通称名</th>
+                        <th width="45%">得意先名</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td aria-label="車両コード"><a href="./car-detail.html" >3850</a></td>
+                      <td aria-label="車両登録番号">宇都宮　３００な３８５０</td>
+                      <td aria-label="車名">ﾆｯｻﾝ</td>
+                      <td aria-label="通称名">ｽﾃｰｼﾞｱ</td>
+                        <td aria-label="得意先名"><a href="./customer-detail.html" >（株）テクノ産業</a></td>
+                    </tr>
+                    <tr>
+                        <td aria-label="車両コード"><a href="./car-detail.html" >5565</a></td>
+                      <td aria-label="車両登録番号">宇都宮　５８０あ５５６５</td>
+                      <td aria-label="車名">ｽｽﾞｷ</td>
+                      <td aria-label="通称名">ﾜｺﾞﾝR</td>
+                      <td aria-label="得意先名"></td>
+                    </tr>
+                    <tr>
+                      <td aria-label="車両コード"><a href="./car-detail.html" >4689</a></td>
+                      <td aria-label="車両登録番号"></td>
+                      <td aria-label="車名">ｽｽﾞｷ</td>
+                      <td aria-label="通称名">ﾜｺﾞﾝR</td>
+                      <td aria-label="得意先名"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

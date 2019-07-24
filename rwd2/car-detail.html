@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>車両</title>
+        <meta charset="utf-8">
+        <link href="styles/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 25%">
+                    <div style="width: 100%">
+                        <div class="header-div"><label>車両登録番号</label></div>
+                        <div class="value-div"><input type="text" style="width: 90%; text-align: center"></div>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>登録年月日</label>
+                        <input type="date"/>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>初年度</label>
+                        <input type="month"/>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>種別</label>
+                        <select style="font-size: 16px">
+                            <option value="1">小型</option>
+                            <option value="2">軽自動車</option>
+                            <option value="3">普通</option>
+                            <option value="4">大型</option>
+                            <option value="5">大型特殊</option>
+                            <option value="6">小型特殊</option>
+                        </select> 
+                    </div>
+                    
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>用途</label>
+                        <select style="font-size: 16px">
+                            <option value="1">乗用</option>
+                            <option value="2">貨物</option>
+                            <option value="3">乗合</option>
+                            <option value="4">特種</option>
+                            <option value="5">ー</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                   <div>
+                        <label>自事</label>
+                        <select style="font-size: 16px">
+                            <option value="1">自家用</option>
+                            <option value="2">事業用</option>
+                        </select>
+                    </div> 
+                </td>
+                <td style="width: 25%">
+                    <div>
+                        <label>車体の形状</label>
+                        <div>
+                            <select style="width: 100%; font-size: 16px">
+                                <option value="1">箱型</option>
+                                <option value="2">幌型</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 30%" rowspan="2">メーカー名</td>
+                <td style="width: 10%">
+                    <div>
+                        <label>乗車定員</label>
+                        <input type="text">
+                    </div>
+                </td>
+                <td style="width: 20%" colspan="2">
+                    <div>
+                        <label>最大積載量</label>
+                        <input type="text">
+                    </div>
+                </td>
+                <td style="width: 20%" colspan="2">
+                   <div>
+                        <label>車両重量</label>
+                        <input type="text">
+                    </div> 
+                </td>
+                <td style="width: 20%" colspan="2">
+                    <div>
+                        <label>車両総重量</label>
+                        <input type="text">
+                    </div> 
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 10%">
+                    <div>
+                        <label>長さ</label>
+                        <input type="text">
+                    </div> 
+                </td>
+                <td style="width: 10%">
+                   <div>
+                        <label>幅</label>
+                        <input type="text">
+                    </div> 
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>高さ</label>
+                        <input type="text">
+                    </div> 
+                </td>
+                <td style="width: 10%">
+                   <div>
+                        <label>前前軸重</label>
+                        <input type="text">
+                    </div> 
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>前後軸重</label>
+                        <input type="text">
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>後前軸重</label>
+                        <input type="text">
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div>
+                        <label>後後軸重</label>
+                        <input type="text">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 20%">
+                    <div>
+                        <label>型式</label>
+                        <input type="text" style="width: 60%">
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div>
+                        <label>原動機の型式</label>
+                        <input type="text" style="width: 45%">
+                    </div>
+                </td>
+                <td style="width: 15%">
+                    <div>
+                        <label>排気量</label>
+                        <input type="text" style="width: 45%">
+                    </div>
+                </td>
+                <td style="width: 15%">
+                    <div>
+                        <label>燃料の種類</label>
+                        <select style="font-size: 16px">
+                            <option value="1">ガソリン</option>
+                            <option value="2">軽油</option>
+                            <option value="3">LPG</option>
+                            <option value="4">CNG</option>
+                            <option value="5">電気</option>
+                            <option value="6">その他</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="width: 15%">型指指定</td>
+                <td style="width: 15%">類別区分</td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 100%">
+                    <div style="width: 100%">
+                        <label>使用者</label>
+                        <input type="text" style="width: 90%">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 100%">
+                    <div style="width: 100%">
+                        <label>所有者</label>
+                        <input type="text" style="width: 90%">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 80%">
+                    <div style="width: 100%">
+                        <label>使用の本拠地</label>
+                        <input type="text" style="width: 80%">
+                    </div>
+                </td>
+                <td style="width: 20%">入庫日</td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 25%">
+                    <div>
+                        <label>車検満了日</label>
+                        <input type="date"/>
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div>
+                        <label>車検有効期間</label>
+                        <select style="font-size: 16px">
+                            <option value="1">1年</option>
+                            <option value="2">2年</option>
+                            <option value="3">3年</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="width: 30%">
+                    <div style="width: 100%">
+                        <label>装備</label>
+                        <input type="text" style="width: 80%">
+                    </div>
+                </td>
+                <td style="width: 25%">
+                    <div>
+                        <label>自賠責区分</label>
+                        <select style="font-size: 16px">
+                            <option value="1">なし</option>
+                            <option value="2">最大積載量1t未満</option>
+                            <option value="3">最大積載量1t超</option>
+                        </select>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%" border="1">
+            <tr>
+                <td style="width: 100%">
+                    <div style="width: 100%">
+                        <label>請求先</label>
+                        <input type="text" style="width: 90%">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
