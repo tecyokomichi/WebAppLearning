@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>音声認識</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <style type="text/css">
+            select {font-size:20px; border:1px; z-index:1;}
+            button {width: 100px; color:red; font-size:50px; z-index:1;}
+            div {font-size:20px; display: flex;}
+        </style>
+    </head>
+    <body>
+        <div>
+            <select id="lang">
+                <option value="ja-JP">日本語</option>
+                <option value="en-US">英語 US</option>
+            </select>
+            <button id="button1">●</button>
+            <button id="button2">▶︎</button>
+            <button id="button3">C</button>
+        </div>
+        <div class="buttonDiv">
+        </div>
+        <a id="sound"></a>
+        <div id="text"></div>
+        <div id="speeching"></div>
+        <script>
+            SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+            const recognition = new SpeechRecognition();
+            if (!'SpeechRecognition' in window){
+                alert('このブラウザじゃ無理!');
+            }
+            recognition.interimResults = true;
+            recognition.continuous = false;
+            const btn1 = document.getElementById('button1');
+            const btn2 = document.getElementById('button2');
+            const btn3 = document.getElementById('button3');
+            const text = document.getElementById('text');
+            const speeching = document.getElementById('speeching');
+            const lang = document.getElementById('lang');
+            var recording = false;
+            const sound = document.getElementById('sound');
+            var mediaRecorder;
+            var speechTxt = '';
+            btn1.addEventListener('click' , function() {
+                if(recording){
+                    recording = false;
+                    recognition.stop();
+                }else{
+                    recognition.lang = lang.value;
+                    recognition.start();
+                    recording = true;
+                    btn1.textContent = "■";
+                    sound.textContent = "録音中...";
+                    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(handleSuccess);
+                }
+            });
+        
+            btn2.addEventListener('click', function() {
+                var ssu = new SpeechSynthesisUtterance();
+                ssu.text = speechTxt;
+                ssu.lang = lang.value;
+                ssu.rate = 1.0;
+                speechSynthesis.speak(ssu);
+            });
+            
+            btn3.addEventListener('click', function() {
+                speechTxt = '';
+                text.innerHTML = '';
+            });
+            
+            recognition.onresult = function(e){
+                speeching.innerText = '';
+                for (let i = e.resultIndex; i < e.results.length; i++){
+                    let result = e.results[i][0].transcript;
+                    if(e.results[i].isFinal){
+                        text.innerHTML += '<div>'+result+'</div>';
+                        speechTxt += result;
+                    }else{
+                        speeching.innerText += result;
+                        scrollBy( 0, 50 );
+                    }
+                }
+            };
+            
+            recognition.onend = function(){
+                if(recording){
+                    recognition.lang = lang.value;
+                    recognition.start();
+                }else{
+                    btn1.textContent = "●";
+                    mediaRecorder.stop();
+                }
+            };
+            
+            var handleSuccess = function(stream) {
+                var recordedChunks = [];
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = function(e) {
+                    if (e.data.size > 0) {
+                        recordedChunks.push(e.data);
+                    }
+                };
+                mediaRecorder.onstop = function() {
+                    var d = new Date();
+                    var fn = ((((d.getFullYear()*100 + d.getMonth()+1)*100 + d.getDate())*100 + d.getHours())*100 + d.getMinutes())*100 + d.getMinutes();
+                    sound.href = URL.createObjectURL(new Blob(recordedChunks));
+                    sound.textContent = "音声ファイル";
+                    sound.download = fn+".webm";
+                };
+                mediaRecorder.start();
+            };
+    </script>
+  </body>
+</html>
