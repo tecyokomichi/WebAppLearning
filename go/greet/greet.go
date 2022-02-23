@@ -2,6 +2,7 @@ package greetapi
 
 import (
 	"context"
+	"fmt"
 	greet "greet/gen/greet"
 	"log"
 )
@@ -20,5 +21,5 @@ func NewGreet(logger *log.Logger) greet.Service {
 // Hello implements hello.
 func (s *greetsrvc) Hello(ctx context.Context, p *greet.HelloPayload) (res string, err error) {
 	s.logger.Print("greet.hello")
-	return
+	return fmt.Sprintf("こんにちは、  %v  さん！", p.Name), nil
 }
