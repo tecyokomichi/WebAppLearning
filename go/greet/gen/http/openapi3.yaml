@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Greeting Service
+  description: Service that manage greeting
+  version: "1.0"
+servers:
+- url: http://localhost:8001
+paths:
+  /hello/{name}:
+    get:
+      tags:
+      - greet
+      summary: hello greet
+      operationId: greet#hello
+      parameters:
+      - name: name
+        in: path
+        description: Name
+        required: true
+        schema:
+          type: string
+          description: Name
+          example: Quibusdam voluptatem expedita ut dignissimos doloribus enim.
+        example: Aliquam eum neque.
+      responses:
+        "200":
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Non aspernatur excepturi quia vitae omnis.
+              example: Aut rerum consequatur dolores vitae blanditiis.
+components: {}
+tags:
+- name: greet
+  description: Service that manage greeting
