@@ -2,6 +2,7 @@ package sanmpleapi
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	sampleapi "sampleApi/gen/sample_api"
 )
@@ -10,11 +11,12 @@ import (
 // The example methods log the requests and return zero values.
 type sampleAPIsrvc struct {
 	logger *log.Logger
+	DB     *sql.DB
 }
 
 // NewSampleAPI returns the sampleApi service implementation.
-func NewSampleAPI(logger *log.Logger) sampleapi.Service {
-	return &sampleAPIsrvc{logger}
+func NewSampleAPI(logger *log.Logger, db *sql.DB) sampleapi.Service {
+	return &sampleAPIsrvc{logger, db}
 }
 
 // Show implements show.

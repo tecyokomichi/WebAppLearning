@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
@@ -13,6 +14,8 @@ import (
 	sampleapi "sampleApi/gen/sample_api"
 	"sync"
 	"syscall"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -35,12 +38,25 @@ func main() {
 		logger = log.New(os.Stderr, "[sanmpleapi] ", log.Ltime)
 	}
 
+	var (
+		db  *sql.DB
+		err error
+	)
+
+	{
+		db, err = sql.Open("mysql", "root@tcp(127.0.0.1:3306)/toukouen-local")
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+		defer db.Close()
+	}
+
 	// Initialize the services.
 	var (
 		sampleAPISvc sampleapi.Service
 	)
 	{
-		sampleAPISvc = sanmpleapi.NewSampleAPI(logger)
+		sampleAPISvc = sanmpleapi.NewSampleAPI(logger, db)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
