@@ -11,12 +11,12 @@ func main() {
 		showHelp()
 		os.Exit(1)
 	} else if len(os.Args) == 4 {
-		var kind string
+		var calc Calculation
 		switch os.Args[1] {
 		case "add":
-			kind = "addition"
+			calc = &Addition{}
 		case "subtract":
-			kind = "subtraction"
+			calc = &Subtraction{}
 		default:
 			showHelp()
 			os.Exit(1)
@@ -31,14 +31,7 @@ func main() {
 			fmt.Printf("%s\n", e.Error())
 			os.Exit(1)
 		}
-		var r int
-		switch kind {
-		case "addition":
-			r = x + y
-		case "subtraction":
-			r = x - y
-		}
-		fmt.Printf("%s: %d\n", kind, r)
+		fmt.Printf("%s: %d\n", calc.Kind(), calc.Do(x, y))
 		os.Exit(0)
 	}
 }
