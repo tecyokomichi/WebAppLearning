@@ -28,3 +28,10 @@ func main() {
 		os.Exit(0)
 	}
 }
+
+func showHelp() {
+	fmt.Println("USAGE:")
+	fmt.Println("./ch02_first_cli (add|subtract) X Y")
+	fmt.Println(" Shows addition or subtraction with X and Y")
+	fmt.Println(" X and Y must be number")
+}
