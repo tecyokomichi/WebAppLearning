@@ -6,18 +6,18 @@ import (
 	"strconv"
 )
 
+var calcMap = map[string]Calculation{
+	"add":			&Addition{},
+	"subtract":		&Subtraction{},
+}
+
 func main() {
 	if len(os.Args) < 4 || 4 < len(os.Args) {
 		showHelp()
 		os.Exit(1)
 	} else if len(os.Args) == 4 {
-		var calc Calculation
-		switch os.Args[1] {
-		case "add":
-			calc = &Addition{}
-		case "subtract":
-			calc = &Subtraction{}
-		default:
+		calc, ok := calcMap[os.Args[1]]
+		if !ok {
 			showHelp()
 			os.Exit(1)
 		}
