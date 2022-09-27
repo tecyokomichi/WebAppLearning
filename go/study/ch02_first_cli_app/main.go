@@ -21,14 +21,14 @@ func main() {
 			showHelp()
 			os.Exit(1)
 		}
-		x, e := strconv.Atoi(os.Args[2])
+		x, e := parseInt(os.Args[2])
 		if  e != nil {
-			fmt.Printf("ERROR: %q is not a number\n", os.Args[2])
+			fmt.Printf("%s\n", e.Error())
 			os.Exit(1)
 		}
-		y, e := strconv.Atoi(os.Args[3])
+		y, e := parseInt(os.Args[3])
 		if  e != nil {
-			fmt.Printf("ERROR: %q is not a number\n", os.Args[3])
+			fmt.Printf("%s\n", e.Error())
 			os.Exit(1)
 		}
 		var r int
@@ -48,4 +48,12 @@ func showHelp() {
 	fmt.Println("./ch02_first_cli (add|subtract) X Y")
 	fmt.Println(" Shows addition or subtraction with X and Y")
 	fmt.Println(" X and Y must be number")
+}
+
+func parseInt(s string) (int, error) {
+	r, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, fmt.Errorf("ERROR: %q is not a number", s)
+	}
+	return r, nil
 }
