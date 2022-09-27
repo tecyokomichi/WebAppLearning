@@ -21,3 +21,13 @@ func TestSubtraction(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestMultiplication(t *testing.T) {
+	calc := &Multiplication{}
+	if calc.Kind() != "multiplication" {
+		t.FailNow()
+	}
+	if calc.Do(2, 3) != 6 {
+		t.FailNow()
+	}
+}
