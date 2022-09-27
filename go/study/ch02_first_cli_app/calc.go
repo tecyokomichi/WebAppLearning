@@ -24,3 +24,13 @@ func (*Subtraction) Kind() string {
 func (*Subtraction) Do(x, y int) int {
 	return x - y
 }
+
+type Multiplication struct{}
+
+func (*Multiplication) Kind() string {
+	return "multiplication"
+}
+
+func (*Multiplication) Do(x, y int) int {
+	return x * y
+}
