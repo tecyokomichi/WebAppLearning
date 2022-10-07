@@ -10,6 +10,7 @@ var calcMap = map[string]Calculation{
 	"add":			&Addition{},
 	"subtract":		&Subtraction{},
 	"multiply":		&Multiplication{},
+	"divide":		&Division{},
 }
 
 func main() {
@@ -32,14 +33,14 @@ func main() {
 			fmt.Printf("%s\n", e.Error())
 			os.Exit(1)
 		}
-		fmt.Printf("%s: %d\n", calc.Kind(), calc.Do(x, y))
+		fmt.Printf("%s: %s\n", calc.Kind(), calc.Do(x, y).Outcome())
 		os.Exit(0)
 	}
 }
 
 func showHelp() {
 	fmt.Println("USAGE:")
-	fmt.Println("./ch02_first_cli (add|subtract|multiply) X Y")
+	fmt.Println("./ch02_first_cli (add|subtract|multiply|divide) X Y")
 	fmt.Println(" Shows the result of calculation with X and Y")
 	fmt.Println(" X and Y must be number")
 }
