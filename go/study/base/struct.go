@@ -13,3 +13,7 @@ type Rect struct {
 	width, length int
 	Point  *Point
 }
+
+func NewCircle(p *Point, r int) *Circle {
+	return &Circle{Point: p, radius: r}
+}
