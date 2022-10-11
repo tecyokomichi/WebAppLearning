@@ -26,3 +26,13 @@ func TestArea(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestBiggest(t *testing.T) {
+	p := &Point{Px: 100, Py: 200}
+	r1 := &Rect{Point: p, width: 300, length: 400}
+	r2 := &Rect{Point: p, width: 30, length: 40}
+	r3 := &Rect{Point: p, width: 3, length: 4}
+	if RecList([]*Rect{r1, r2, r3}).Biggest().Area() != 120000 {
+		t.FailNow()
+	}
+}
