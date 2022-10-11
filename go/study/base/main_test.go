@@ -18,3 +18,11 @@ func TestExpandCircle(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestArea(t *testing.T) {
+	p := &Point{Px: 100, Py: 200}
+	r := &Rect{Point: p, width: 300, length: 400}
+	if r.Area() != 120000 {
+		t.FailNow()
+	}
+}
