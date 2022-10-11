@@ -2,22 +2,6 @@ package main
 
 import "fmt"
 
-type Point struct {
-	Px int
-	Py int
-}
-
-type Circle struct {
-	radius int
-	Point *Point
-}
-
-type Rect struct {
-	width int
-	length int
-	Point *Point
-}
-
 func main() {
 	p1 := new(Point)
 	p1.Px = 100
