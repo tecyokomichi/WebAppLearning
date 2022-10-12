@@ -1,5 +1,7 @@
 package main
 
+import "math"
+
 type Point struct {
 	Px, Py int
 }
@@ -26,8 +28,12 @@ func (c *Circle) Expand(dr int){
 	c.radius += dr
 }
 
-func (r *Rect) Area() int {
-	return r.width * r.length
+func (c *Circle) Area() float64 {
+	return float64(c.radius * c.radius) * math.Pi
+}
+
+func (r *Rect) Area() float64 {
+	return float64(r.width * r.length)
 }
 
 type RecList []*Rect
