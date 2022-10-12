@@ -20,4 +20,5 @@ func main() {
 	r5 := &Rect{Point: p1, width: 10, length: 5}
 	fmt.Printf("%#v\n", r1)
 	fmt.Printf("%#v\n", RecList([]*Rect{r1, r2, r3, r4, r5}).Biggest())
+	fmt.Printf("%#v\n", Shapes([]Shape{c1, r1, r2, r3, r4, r5}).Biggest())
 }
