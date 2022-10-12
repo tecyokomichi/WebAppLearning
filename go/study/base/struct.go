@@ -4,6 +4,10 @@ type Point struct {
 	Px, Py int
 }
 
+type Shape interface {
+	Area() float64
+}
+
 type Circle struct {
 	radius int
 	Point  *Point
