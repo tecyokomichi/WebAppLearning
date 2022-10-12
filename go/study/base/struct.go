@@ -47,3 +47,15 @@ func (rl RecList) Biggest() *Rect {
 	}
 	return b
 }
+
+type Shapes []Shape
+
+func (sha Shapes) Biggest() Shape {
+	var b Shape
+	for _, r := range sha {
+		if b == nil || r.Area() > b.Area(){
+			b = r
+		}
+	}
+	return b
+}
