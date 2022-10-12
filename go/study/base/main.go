@@ -8,10 +8,12 @@ func main() {
 
 	c1 := NewCircle(p1, 30)
 	fmt.Printf("%#v\n", c1)
+	fmt.Printf("面積：　%#v\n", c1.Area())
 	c1.Expand(10)
 	fmt.Printf("%#v\n", c1)
 
 	r1 := &Rect{Point: p1, width: 20, length: 10}
+	fmt.Printf("面積：　%#v\n", r1.Area())
 	r2 := &Rect{Point: p1, width: 30, length: 20}
 	r3 := &Rect{Point: p1, width: 40, length: 30}
 	r4 := &Rect{Point: p1, width: 50, length: 40}
