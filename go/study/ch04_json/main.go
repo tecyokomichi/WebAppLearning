@@ -20,14 +20,28 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "example":
-		person := &Person{
-			FirstName: "Blake",
-			LastName: "Serild",
-			Birthday: "1989-07-10",
-			Age: 33,
+		people := []*Person {
+			{
+				FirstName: "Blake",
+				LastName: "Serild",
+				Birthday: "1989-07-10",
+				Age: 33,
+			},
+			{
+				FirstName: "Libbie",
+				LastName: "Drisko",
+				Birthday: "1988-06-15",
+				Age: 24,
+			},
+			{
+				FirstName: "Anestassia",
+				LastName: "Truc",
+				Birthday: "1973-04-02",
+				Age: 48,
+			},
 		}
 
-		b, err := json.MarshalIndent(person, "", "\t")
+		b, err := json.MarshalIndent(people, "", "\t")
 		if err != nil {
 			fmt.Printf("Error: %v", err)
 			os.Exit(1)
