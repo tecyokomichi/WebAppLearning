@@ -27,7 +27,7 @@ func main() {
 			Age: 33,
 		}
 
-		b, err := json.Marshal(person)
+		b, err := json.MarshalIndent(person, "", "\t")
 		if err != nil {
 			fmt.Printf("Error: %v", err)
 			os.Exit(1)
