@@ -7,10 +7,10 @@ import (
 )
 
 type Person struct {
-	FirstName	string
-	LastName	string
-	Birthday	string
-	Age			int
+	FirstName   string  `json:"first_name"`
+	LastName    string  `json:"last_name"`
+	Birthday    string  `json:"birthday"`
+	Age	    int     `json:"age"`
 }
 
 func main() {
