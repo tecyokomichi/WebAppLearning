@@ -47,6 +47,28 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println(string(b))
+	case "summary":
+		var people []*Person
+		if len(os.Args) < 3 || len(os.Args) > 3 {
+			showHelp()
+			os.Exit(1)
+		}
+		f, err := os.ReadFile(os.Args[2])
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+			os.Exit(1)
+		}
+		err = json.Unmarshal(f, &people)
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+			os.Exit(1)
+		}
+		count, sum := 0, 0
+		for _, p := range people {
+			count++
+			sum += p.Age
+		}
+		fmt.Printf("%d 人、平均年齢 %d \n", count, sum/count)
 	default:
 		showHelp()
 		os.Exit(1)
