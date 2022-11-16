@@ -25,8 +25,12 @@ func main() {
 			showHelp()
 			os.Exit(1)
 		}
-		_, e := os.Stat(os.Args[2])
-		if e == nil {
+		if _, err := os.Stat(os.Args[2]); err != nil {
+			if !os.IsNotExist(err) {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+		} else {
 			fmt.Printf("%s already exists. Overwrite? (y/n): ", os.Args[2])
 			var res string
 			fmt.Scanln(&res)
