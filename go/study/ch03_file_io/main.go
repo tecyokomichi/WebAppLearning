@@ -50,7 +50,22 @@ func main() {
 			fmt.Fprintln(os.Stderr, ee)
 			os.Exit(1)
 		}
-
+	case "append":
+		if len (os.Args) != 4 {
+			showHelp()
+			os.Exit(1)
+		}
+		f, err := os.OpenFile(os.Args[2], os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0664)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		defer f.Close()
+		_, e := fmt.Fprintln(f, os.Args[3])
+		if e != nil{
+			fmt.Fprintln(os.Stderr, e)
+			os.Exit(1)
+		}
 	default:
 		showHelp()
 		os.Exit(1)
