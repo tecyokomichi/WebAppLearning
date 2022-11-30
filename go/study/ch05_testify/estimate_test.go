@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -34,6 +35,10 @@ func TestProductMapGet(t *testing.T) {
 
 func TestProductMapCalculate(t *testing.T) {
 	t.Run("basic pattern", func(t *testing.T) {
+		now := time.Now()
+		NowFunc = func() time.Time { return now }
+		defer func() { NowFunc = time.Now }()
+
 		m := newTestProductMap()
 		res, err := m.Calculate(Request{
 			ClientName: "John Smith",
@@ -44,17 +49,18 @@ func TestProductMapCalculate(t *testing.T) {
 			},
 		})
 		require.NoError(t, err)
-		require.NotNil(t,res)
-		assert.Equal(t, "John Smith", res.ClientName)
-		assert.False(t, res.EstimatedAt.IsZero())
-		assert.Equal(t, 2*200+3*120+4*250, res.SubTotal)
-		assert.Equal(t, 2*200*10/100+3*120*8/100+4*250*8/100, res.Tax)
-		assert.Equal(t, 2*200+3*120+4*250+2*200*10/100+3*120*8/100+4*250*8/100, res.Total)
-		assert.Equal(t, []*ResponseItem{
-			{ProductName: "Apple", Quantity: 2, SubTotal: 2 * 200, TaxRate: 10, Tax: 2 * 200 * 10 / 100},
-			{ProductName: "Orange", Quantity: 3, SubTotal: 3 * 120, TaxRate: 8, Tax: 3 * 120 * 8 / 100},
-			{ProductName: "Banana", Quantity: 4, SubTotal: 4 * 250, TaxRate: 8, Tax: 4 * 250 * 8 / 100},
-		}, res.Items)
+		require.Equal(t, &Response{
+			ClientName:  "John Smith",
+			EstimatedAt: now,
+			SubTotal:    2*200 + 3*120 + 4*250,
+			Tax:         2*200*10/100 + 3*120*8/100 + 4*250*8/100,
+			Total:       2*200 + 3*120 + 4*250 + 2*200*10/100 + 3*120*8/100 + 4*250*8/100,
+			Items: []*ResponseItem{
+				{ProductName: "Apple", Quantity: 2, SubTotal: 2 * 200, TaxRate: 10, Tax: 2 * 200 * 10 / 100},
+				{ProductName: "Orange", Quantity: 3, SubTotal: 3 * 120, TaxRate: 8, Tax: 3 * 120 * 8 / 100},
+				{ProductName: "Banana", Quantity: 4, SubTotal: 4 * 250, TaxRate: 8, Tax: 4 * 250 * 8 / 100},
+			},
+		}, res)
 	})
 
 	t.Run("including unknown product", func(t *testing.T) {
