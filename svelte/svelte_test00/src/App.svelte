@@ -1,6 +1,7 @@
 <script>
   import Thing from './Thing.svelte';
   import { getRandomNumber } from './utils.js';
+  import Inner from './Inner.svelte';
 	const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 	let selected = colors[0];
   let things = [
@@ -20,6 +21,10 @@
   function handleClickAwait() {
 		promise = getRandomNumber();
 	}
+
+  function handleMessage(event) {
+    alert(event.detail.text);
+  }
 
 </script>
 
@@ -64,6 +69,8 @@
 <button on:click|once={() => alert('clicked')}>
   Click me
 </button>
+
+<Inner on:message={handleMessage}/>
 
 <style>
 	h1 {
