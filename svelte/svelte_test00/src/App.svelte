@@ -1,7 +1,7 @@
 <script>
   import Thing from './Thing.svelte';
   import { getRandomNumber } from './utils.js';
-  import Inner from './Inner.svelte';
+  import Outer from './Outer.svelte';
 	const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 	let selected = colors[0];
   let things = [
@@ -70,7 +70,7 @@
   Click me
 </button>
 
-<Inner on:message={handleMessage}/>
+<Outer on:message={handleMessage}/>
 
 <style>
 	h1 {
