@@ -5,6 +5,16 @@
   let src = 'images/svelte.png';
   let count = 0;
 
+  $: console.log(`the count is ${ count }`);
+  $: {
+    console.log(`the count is ${ count }`);
+    console.log(`this will also be logged whenever count changes`);
+  }
+  $: if (count >= 10) {
+    alert(`count is dangerously high!`);
+    count = 0;
+  }
+
   $: doubled = count * 2;
 
   function increment() {
