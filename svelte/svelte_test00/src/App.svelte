@@ -2,6 +2,9 @@
   import Thing from './Thing.svelte';
   import { getRandomNumber } from './utils.js';
   import Outer from './Outer.svelte';
+  import BigRedButton from './BigRedButton.svelte';
+  import horn from './horn.mp3';
+  import { onMount } from 'svelte';
 	const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 	let selected = colors[0];
   let things = [
@@ -13,6 +16,12 @@
 	];
   let promise = getRandomNumber();
   let m = { x: 0, y: 0 };
+  let audio;
+
+  onMount(() => {
+    audio = new Audio();
+    audio.src = horn;
+  });
 
 	function handleClick() {
 		things = things.slice(1);
@@ -24,6 +33,10 @@
 
   function handleMessage(event) {
     alert(event.detail.text);
+  }
+
+  function handleClickAudio() {
+    audio.play();
   }
 
 </script>
@@ -71,6 +84,8 @@
 </button>
 
 <Outer on:message={handleMessage}/>
+
+<BigRedButton on:click={handleClickAudio} />
 
 <style>
 	h1 {
