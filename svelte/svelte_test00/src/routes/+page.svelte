@@ -7,3 +7,11 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
 <img { src } alt="{ name } dances." />
+
+<style>
+  p {
+    color: goldenrod;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 2em;
+  }
+</style>
