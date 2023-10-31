@@ -1,5 +1,6 @@
 <script>
   import Thing from './Thing.svelte';
+  import { getRandomNumber } from './utils.js';
 	const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
 	let selected = colors[0];
   let things = [
@@ -9,9 +10,14 @@
 		{ id: 4, name: 'doughnut' },
 		{ id: 5, name: 'egg' }
 	];
+  let promise = getRandomNumber();
 
 	function handleClick() {
 		things = things.slice(1);
+	}
+
+  function handleClickAwait() {
+		promise = getRandomNumber();
 	}
 </script>
 
@@ -35,6 +41,17 @@
 {#each things as thing (thing.id)}
 	<Thing name={ thing.name } />
 {/each}
+
+<button on:click={handleClickAwait}>
+	generate random number
+</button>
+{#await promise}
+  <p>...waiting</p>
+{:then number}
+  <p>The number is {number}</p>
+{:catch error}
+  <p style="color: red">{error.message}</p>
+{/await}
 
 <style>
 	h1 {
