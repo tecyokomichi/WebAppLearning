@@ -1,5 +1,13 @@
 <script>
   import Nested from '../Nested.svelte';
+  import PackageInfo from '../PackageInfo.svelte';
+
+  const pkg = {
+    name: 'svelte',
+    speed: 'blazing',
+    version: '4',
+    website: 'https://svelte.dev'
+  };
 
   let name = 'svelte';
   let src = 'images/svelte.png';
@@ -35,6 +43,14 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 <Nested answer={ 42 } />
 <Nested />
+<!-- <PackageInfo
+  name={ pkg.name }
+  speed={ pkg.speed }
+  version={ pkg.version }
+  website={ pkg.website }
+/> -->
+<PackageInfo { ...pkg } />
+
 
 <button on:click={ increment }>
   Clicked { count }
