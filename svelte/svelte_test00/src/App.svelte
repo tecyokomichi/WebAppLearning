@@ -17,6 +17,7 @@
   let promise = getRandomNumber();
   let m = { x: 0, y: 0 };
   let audio;
+  let name = 'color';
 
   onMount(() => {
     audio = new Audio();
@@ -41,7 +42,7 @@
 
 </script>
 
-<h1 style="color: {selected}">Pick a colour</h1>
+<h1 style="color: {selected}">Pick a colour {name}</h1>
 
 <div>
 	{#each colors as color, i}
@@ -86,6 +87,8 @@
 <Outer on:message={handleMessage}/>
 
 <BigRedButton on:click={handleClickAudio} />
+
+<input bind:value="{name}" />
 
 <style>
 	h1 {
