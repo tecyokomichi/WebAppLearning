@@ -19,10 +19,10 @@
     console.log(`the count is ${ count }`);
     console.log(`this will also be logged whenever count changes`);
   }
-  $: if (count >= 10) {
+ /* $: if (count >= 10) {
     alert(`count is dangerously high!`);
     count = 0;
-  }
+  } */
 
   $: doubled = count * 2;
 
@@ -56,6 +56,10 @@
   Clicked { count }
   { count === 1 ? 'time' : 'times' }
 </button>
+
+{#if count > 10}
+  <p>{ count } is greater than 10</p>
+{/if}
 
 <button on:click={ addNumber }>
   Add a number
