@@ -1,4 +1,5 @@
 <script>
+  import App from '../App.svelte';
   import Nested from '../Nested.svelte';
   import PackageInfo from '../PackageInfo.svelte';
 
@@ -41,6 +42,7 @@
 
 <h1>Welcome to { name.toUpperCase() }</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<App />
 <Nested answer={ 42 } />
 <Nested />
 <!-- <PackageInfo
