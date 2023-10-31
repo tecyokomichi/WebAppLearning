@@ -61,6 +61,10 @@
   The pointer is at {m.x} {m.y}
 </div>
 
+<button on:click|once={() => alert('clicked')}>
+  Click me
+</button>
+
 <style>
 	h1 {
 		transition: color 0.2s;
