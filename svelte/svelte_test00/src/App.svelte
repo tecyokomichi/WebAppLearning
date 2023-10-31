@@ -21,10 +21,6 @@
 		promise = getRandomNumber();
 	}
 
-  function handleMove(event) {
-    m.x = event.clientX;
-    m.y = event.clientY;
-  }
 </script>
 
 <h1 style="color: {selected}">Pick a colour</h1>
@@ -59,7 +55,9 @@
   <p style="color: red">{error.message}</p>
 {/await}
 
-<div style="width: 100%; height: 100%; padding: 1em" on:pointermove={handleMove}>
+<div style="width: 100%; height: 100%; padding: 1em" on:pointermove={(e) => {
+  m = { x: e.clientX, y: e.clientY };
+}}>
   The pointer is at {m.x} {m.y}
 </div>
 
