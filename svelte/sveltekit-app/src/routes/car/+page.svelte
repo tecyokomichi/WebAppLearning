@@ -11,7 +11,7 @@
 
 <Button>デフォルトボタン</Button>
 
-<Table class="w-full">
+<Table class="w-full" striped="{true}">
     <TableHead>
       <TableHeadCell class="table-header-cell" >コード</TableHeadCell>
       <TableHeadCell class="table-header-cell" >車両登録番号</TableHeadCell>
@@ -26,7 +26,7 @@
     </TableHead>
     <TableBody>
         {#each car as item, i (item.id)}
-            <tr>
+            <tr class="{(i % 2 === 0) ? 'bg-alice-blue' : 'bg-royal-blue'}">
                 <TableBodyCell class="table-body-cell">{item.code}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.registword}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.customerName}</TableBodyCell>

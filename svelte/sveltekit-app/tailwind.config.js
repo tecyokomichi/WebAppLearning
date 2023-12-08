@@ -22,7 +22,11 @@ const config = {
 			800: '#CC4522',
 			900: '#A5371B'
 		  }
-		}
+		},
+		backgroundColor: {
+			'royal-blue': '#4169e1',
+			'alice-blue': '#f0f8ff',
+		},
 	  }
 	}
   };
