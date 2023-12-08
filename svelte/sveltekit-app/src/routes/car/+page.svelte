@@ -13,32 +13,42 @@
 
 <Table class="w-full">
     <TableHead>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >コード</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >車両登録番号</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >得意先名</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >登録日</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >初度</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >車検日</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >前入庫日</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >車名</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >通称名</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" >型式</TableHeadCell>
-      <TableHeadCell class="border border-2 border-green-500 px-6 py-3" ></TableHeadCell>
+      <TableHeadCell class="table-header-cell" >コード</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >車両登録番号</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >得意先名</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >登録日</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >初度</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >車検日</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >前入庫日</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >車名</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >通称名</TableHeadCell>
+      <TableHeadCell class="table-header-cell" >型式</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each car as item, i (item.id)}
             <tr>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.code}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.registword}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.customerName}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.regsitDate}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.regsitFirstDate}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.inspectionDate}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.storingDate}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.carMaker}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.carName}</TableBodyCell>
-                <TableBodyCell class="border border-2 border-green-500 px-6 py-3">{item.carModel}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.code}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.registword}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.customerName}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.regsitDate}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.regsitFirstDate}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.inspectionDate}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.storingDate}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.carMaker}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.carName}</TableBodyCell>
+                <TableBodyCell class="table-body-cell">{item.carModel}</TableBodyCell>
             </tr>
         {/each}
     </TableBody>
-  </Table>
+</Table>
+
+<style>
+	:global(.table-header-cell)  {
+        border: 2px solid green;
+        padding: 12px;
+    }
+    :global(.table-body-cell)  {
+        border: 2px solid green;
+        padding: 12px;
+    }
+</style>
