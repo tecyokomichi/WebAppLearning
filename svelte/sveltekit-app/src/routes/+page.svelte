@@ -1,4 +1,5 @@
 <script>
+	import { Button} from 'flowbite-svelte';
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
@@ -25,6 +26,7 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
 
+	<Button>デフォルトボタン</Button>
 	<Counter />
 </section>
 
