@@ -28,7 +28,7 @@
         {#each car as item, i (item.id)}
             <tr class="{(i % 2 === 0) ? 'bg-alice-blue' : 'bg-royal-blue'}">
                 <TableBodyCell class="table-body-cell">{item.code}</TableBodyCell>
-                <TableBodyCell class="table-body-cell">{item.registword}</TableBodyCell>
+                <TableBodyCell class="table-body-cell" contenteditable="true">{item.registword}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.customerName}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.regsitDate}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.regsitFirstDate}</TableBodyCell>
