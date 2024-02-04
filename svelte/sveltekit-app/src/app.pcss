@@ -2,6 +2,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-main {
+  border: 1px solid #000;
+}
+
+.form-group {
+  padding: 5px;
+  border: 1px solid #000;
+  align-items: center;
+}
+.form-group-only-border-right {
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+}
+.form-group-only-border-right-no-border {
+  border-right: none;
+}
+.form-group-direction-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: none;
+}
+
 @layer utilities {
   .odd\:bg-royal-blue:nth-child(odd) {
     background-color: #4169e1;
