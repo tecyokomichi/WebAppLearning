@@ -1,4 +1,18 @@
-export const car = [
+export type Car = {
+    id: number;
+    code: string;
+    registword: string;
+    regsitDate: string;
+    customerName: string;
+    regsitFirstDate: string;
+    inspectionDate: string;
+    storingDate: string;
+    carMaker: string;
+    carName: string;
+    carModel: string;
+};
+
+export const car: Car[] = [
     { id: 1, code: '1001', registword: '那須　　303み1111', regsitDate: 'H26.01.11', customerName: '斉藤 大介 ', regsitFirstDate: 'H26.01', inspectionDate: 'R7.11.12', storingDate: 'R05.06.06', carMaker: '日産', carName: 'スカイライン', carModel: '*****1' },
     { id: 2, code: '1002', registword: '宇都宮 111あみ  22', regsitDate: 'H27.02.12', customerName: 'ほげほげ産業', regsitFirstDate: 'H27.02', inspectionDate: 'R8.12.13', storingDate: 'R06.07.07', carMaker: '日産', carName: 'キャラバン', carModel: '*****2' },
     { id: 3, code: '1003', registword: '那須 　103い   3', regsitDate: 'H28.03.13', customerName: '木下 秀夫', regsitFirstDate: 'H28.03', inspectionDate: 'R9.13.14', storingDate: 'R07.08.08', carMaker: 'トヨタ', carName: '86', carModel: '*****3' },
