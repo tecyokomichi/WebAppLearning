@@ -26,7 +26,13 @@ const config = {
 		backgroundColor: {
 			'royal-blue': '#4169e1',
 			'alice-blue': '#f0f8ff',
+			'green': '#008000',
+			'light-green': '#90ee90',
+			'light-yellow': '#ffffe0',
 		},
+		gridTemplateColumns: {
+			'18': 'repeat(18, minmax(0, 1fr))'
+		  }
 	  }
 	}
   };

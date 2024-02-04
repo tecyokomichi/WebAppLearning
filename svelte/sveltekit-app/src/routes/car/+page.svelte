@@ -1,8 +1,14 @@
-<script>
+<script lang="ts">
     import { Button, Table, TableBody, TableBodyCell, TableHead, TableHeadCell } from 'flowbite-svelte';
 
-    import { car } from './car.js';
+    import { car } from './car';
+	import type { Car } from './car';
 
+	import { goto } from '$app/navigation';
+
+	function navigateToCarDetail(item: Car) {
+        goto(`/car/${item.id}`);
+    }
 </script>
 
 <svelte:head>
@@ -26,8 +32,8 @@
     </TableHead>
     <TableBody>
         {#each car as item, i (item.id)}
-            <tr class="{(i % 2 === 0) ? 'bg-alice-blue' : 'bg-royal-blue'}">
-                <TableBodyCell class="table-body-cell">{item.code}</TableBodyCell>
+            <tr class="{(i % 2 === 0) ? 'bg-alice-blue' : 'bg-light-yellow'}">
+                <TableBodyCell class="table-body-cell" on:click={() => navigateToCarDetail(item)}>{item.code}</TableBodyCell>
                 <TableBodyCell class="table-body-cell" contenteditable="true">{item.registword}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.customerName}</TableBodyCell>
                 <TableBodyCell class="table-body-cell">{item.regsitDate}</TableBodyCell>
